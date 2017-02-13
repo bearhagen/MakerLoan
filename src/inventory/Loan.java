@@ -7,6 +7,12 @@ public class Loan {
 	private Item item;
 	private Person person;
 	private GregorianCalendar loanDate;
+	
+	public Loan(Item item, Person person, GregorianCalendar loanDate) {
+		this.item = item;
+		this.person = person;
+		this.loanDate = loanDate;
+	}
 
 	public Item getItem() {
 		return item;

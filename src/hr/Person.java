@@ -6,7 +6,14 @@ public class Person {
 	private String name;
 	private String surName;
 	private String phone;
-	private Department Department;
+	private Department department;
+	
+	public Person(String name, String surName, String phone, Department department) {
+		this.name = name;
+		this.surName = surName;
+		this.phone = phone;
+		this.department = department;
+	}
 
 	public String getName() {
 		return name;
@@ -33,10 +40,10 @@ public class Person {
 	}
 
 	public Department getDepartment() {
-		return Department;
+		return department;
 	}
 
 	public void setDepartment(Department department) {
-		Department = department;
+		this.department = department;
 	}
 }

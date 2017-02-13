@@ -2,9 +2,13 @@ package hr;
 
 import administration.Course;
 
-public class Student extends Person {
+public class Student extends Person {	
 	private String studentID;
 	private Course course;
+	
+	public Student(String name, String surName, String phone, Course course) {
+		super(name, surName, phone, course.getDepartment());
+	}
 
 	public String getStudentID() {
 		return studentID;

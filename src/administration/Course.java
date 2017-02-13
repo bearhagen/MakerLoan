@@ -4,6 +4,12 @@ public class Course {
 	private String name;
 	private String courseID;
 	private Department department;
+	
+	public Course(String name, String courseID, Department department) {
+		this.name = name;
+		this.courseID = courseID;
+		this.department = department;
+	}
 
 	public String getName() {
 		return name;
