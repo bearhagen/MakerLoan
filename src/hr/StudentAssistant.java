@@ -1,5 +1,5 @@
 package hr;
 
-public class StudentAssistant {
+public class StudentAssistant extends Student {
 
 }

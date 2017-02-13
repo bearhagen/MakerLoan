@@ -1,5 +1,5 @@
 package hr;
 
-public class AdminEployee {
+public class AdminEployee extends Employee {
 
 }
