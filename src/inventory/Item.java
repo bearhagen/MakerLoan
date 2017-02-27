@@ -17,10 +17,11 @@ public class Item {
 	}
 	
 	public Item(String name, int amount, int itemID) {
-		this(name, amount);
+		this.name = name;
+		this.amount = amount;
 		this.itemID = itemID;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
