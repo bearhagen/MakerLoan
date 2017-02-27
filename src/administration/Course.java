@@ -1,14 +1,18 @@
 package administration;
 
+import java.util.ArrayList;
+
 public class Course {
 	private String name;
 	private String courseID;
 	private Department department;
+	private static ArrayList<Course> courses = new ArrayList<Course>();
 	
 	public Course(String name, String courseID, Department department) {
 		this.name = name;
 		this.courseID = courseID;
 		this.department = department;
+		courses.add(this);
 	}
 
 	public String getName() {
@@ -33,5 +37,9 @@ public class Course {
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	
+	public static ArrayList<Course> getCourses() {
+		return courses;
 	}
 }

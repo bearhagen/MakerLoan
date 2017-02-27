@@ -1,5 +1,7 @@
 package hr;
 
+import java.util.ArrayList;
+
 import administration.Department;
 
 abstract public class Person {
@@ -7,12 +9,14 @@ abstract public class Person {
 	private String surName;
 	private String phone;
 	private Department department;
+	private static ArrayList<Person> persons = new ArrayList<Person>(); 
 	
 	public Person(String name, String surName, String phone, Department department) {
 		this.name = name;
 		this.surName = surName;
 		this.phone = phone;
 		this.department = department;
+		persons.add(this);
 	}
 
 	public String getName() {
@@ -45,5 +49,9 @@ abstract public class Person {
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	
+	public static ArrayList<Person> getPersons() {
+		return persons;
 	}
 }

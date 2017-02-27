@@ -1,25 +1,18 @@
 package inventory;
 
+import java.util.ArrayList;
+
 public class Item {
 	private String name;
 	private int itemID;
 	private int amount;
-	
-	// If only name is given, assume only 1 amount.
-	public Item(String name) {
-		this.name = name;
-		this.amount = 1;
-	}
-	
-	public Item(String name, int amount) {
-		this.name = name;
-		this.amount = amount;
-	}
+	private static ArrayList<Item> items = new ArrayList<Item>();
 	
 	public Item(String name, int amount, int itemID) {
 		this.name = name;
 		this.amount = amount;
 		this.itemID = itemID;
+		items.add(this);
 	}
 	
 	public String getName() {
@@ -44,5 +37,9 @@ public class Item {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	
+	public static ArrayList<Item> getItems() {
+		return items;
 	}
 }

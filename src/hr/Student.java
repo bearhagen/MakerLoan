@@ -1,13 +1,17 @@
 package hr;
 
+import java.util.ArrayList;
 import administration.Course;
+import administration.Department;
 
 public class Student extends Person {	
 	private String studentID;
 	private Course course;
+	private ArrayList<Course> courses = new ArrayList<Course>();
 	
-	public Student(String name, String surName, String phone, Course course, String studentID) {
-		super(name, surName, phone, course.getDepartment());
+	public Student(String name, String surName, String phone, Department department, ArrayList<Course> courses, String studentID) {
+		super(name, surName, phone, department);
+		this.courses.addAll(courses);
 	}
 
 	public String getStudentID() {
@@ -24,5 +28,9 @@ public class Student extends Person {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+	
+	public ArrayList<Course> getCourses() {
+		return courses;
 	}
 }
