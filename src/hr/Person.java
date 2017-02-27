@@ -2,7 +2,7 @@ package hr;
 
 import administration.Department;
 
-public class Person {
+abstract public class Person {
 	private String name;
 	private String surName;
 	private String phone;
