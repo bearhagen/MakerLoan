@@ -57,4 +57,12 @@ public class Course {
 		
 		return false;
 	}
+	
+	/**
+	 *  Get values and turn them into a human friendly string
+	 */
+	public String toString() {
+		return department + " - " + courseID + " - " + name;
+	}
+	
 }

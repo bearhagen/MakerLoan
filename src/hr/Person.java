@@ -68,5 +68,14 @@ abstract public class Person {
 		
 		return false;
 	}
+	
+	/**
+	 *  Get values and turn them into a human friendly string
+	 */
+	public String toString() {
+		return this.getClass().getSimpleName() + " - " + name + " " + surName + " - " + phone + " - " + department;
+	}
+	
+	/**
 	}
 }
