@@ -65,4 +65,16 @@ public class Course {
 		return department + " - " + courseID + " - " + name;
 	}
 	
+	/**
+	 * Runs toString method on all the items in the course list and returns them in an array
+	 */
+	public static Object[] toStrings() {
+		ArrayList<String> strings = new ArrayList<String>();
+		for (int i = 0; i < courses.size(); i++) {
+			strings.add(courses.get(i).toString());
+		}
+		
+		return strings.toArray();
+	}
+	
 }

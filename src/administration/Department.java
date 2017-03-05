@@ -55,4 +55,15 @@ public class Department {
 		return code + " - " + name;
 	}
 	
+	/**
+	 * Runs toString method on all the items in the departments list and returns them in an array
+	 */
+	public static Object[] toStrings() {
+		ArrayList<String> strings = new ArrayList<String>();
+		for (int i = 0; i < departments.size(); i++) {
+			strings.add(departments.get(i).toString());
+		}
+		
+		return strings.toArray();
+	}
 }
