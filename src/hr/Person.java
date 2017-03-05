@@ -53,5 +53,18 @@ abstract public class Person {
 	
 	public static ArrayList<Person> getPersons() {
 		return persons;
+	/**
+	 *  Check if this person is already created
+	 */
+	public static boolean exist(String name, String surName, String phone) {
+		for (int i = 0; i < people.size(); i++) {
+			Person tmpPerson = people.get(i);
+			if	(tmpPerson.getName().equals(name) && tmpPerson.getSurName().equals(surName) && tmpPerson.getPhone().equals(phone)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	}
 }

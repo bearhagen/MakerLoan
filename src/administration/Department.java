@@ -34,4 +34,19 @@ public class Department {
 	public static ArrayList<Department> getDepartments() {
 		return departments;
 	}
+	
+	/**
+	 *  Check if this department is already created
+	 * @param code
+	 * @return boolean
+	 */
+	public static boolean exist(String code) {
+		for (int i = 0; i < departments.size(); i++) {						
+			if	(departments.get(i).getCode().equals(code)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

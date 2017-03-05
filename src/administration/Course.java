@@ -42,4 +42,19 @@ public class Course {
 	public static ArrayList<Course> getCourses() {
 		return courses;
 	}
+	
+	/**
+	 *  Check if this course is already created
+	 * @param courseID
+	 * @return boolean
+	 */
+	public static boolean exist(String courseID) {
+		for (int i = 0; i < courses.size(); i++) {						
+			if	(courses.get(i).getCourseID().equals(courseID)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
