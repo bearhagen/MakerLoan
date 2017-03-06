@@ -727,6 +727,28 @@ public class MainFrame extends JFrame {
         ccsFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
         ccsFooterScrollPane.setBorder(emptyBorder);
         ccsFooterScrollPane.setViewportView(courseSelectList);
+        
+		JPanel ccsFooter = new JPanel();
+		ccsFooter.setBorder(new EmptyBorder(10, 100, 10, 100));
+		ccsFooter.setBackground(Color.WHITE);
+		GridBagConstraints gbc_ccsFooter = new GridBagConstraints();
+		gbc_ccsFooter.fill = GridBagConstraints.BOTH;
+		gbc_ccsFooter.gridx = 0;
+		gbc_ccsFooter.gridy = 3;
+		cardCourseSelect.add(ccsFooter, gbc_ccsFooter);
+		ccsFooter.setLayout(new BorderLayout(0, 0));
+		
+		ccsBtnDone.setForeground(colorWhite);
+		ccsBtnDone.setBackground(colorSuccess);
+		ccsFooter.add(ccsBtnDone, BorderLayout.EAST);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(Color.WHITE);
+		ccsFooter.add(panel_6);
+		
+		btnAvbryt.setForeground(colorWhite);
+		btnAvbryt.setBackground(colorAlert);
+		ccsFooter.add(btnAvbryt, BorderLayout.WEST);
 		//// cardCourseSelect - End ////
 	public void updateLists() {
 		// for departments card
