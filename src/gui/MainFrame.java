@@ -18,12 +18,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,18 +31,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import java.util.ArrayList;
+import net.miginfocom.swing.MigLayout;
+
+import gui.Button;
+import gui.branding.*;
+
 import administration.Course;
 import administration.Department;
+
 import hr.AcademicEmployee;
 import hr.AdminEmployee;
 import hr.Person;
 import hr.Student;
-import net.miginfocom.swing.MigLayout;
 
 public class MainFrame extends JFrame {
 
@@ -73,8 +76,8 @@ public class MainFrame extends JFrame {
 	
 	// Course select card
 	private JList<Object> courseSelectList;
-	private JButton ccsBtnDone = new JButton("Ferdig");
-	private JButton btnAvbryt = new JButton("Avbryt");
+	private Button ccsBtnDone = new Button("Ferdig");
+	private Button ccsBtnCancel = new Button("Avbryt");
 
 
 	/**
@@ -143,27 +146,14 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		// Back button
-		JButton btnTilbake = new JButton("Tilbake");
-		btnTilbake.setForeground(colorBlack);
-		btnTilbake.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		btnTilbake.setFocusPainted(false);
-		btnTilbake.setBackground(colorGrayLight);
-		btnTilbake.setBounds(25, 25, 100, 30);
-		btnTilbake.setVisible(false);
-		contentPane.add(btnTilbake);
-		
-		btnTilbake.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	btnTilbake.setBackground(colorSecondary);
-		    	btnTilbake.setForeground(colorWhite);
-		    	UIManager.put("Button.select", colorSecondary);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	btnTilbake.setForeground(colorBlack);
-		    	btnTilbake.setBackground(colorGrayLight);
-		    }
-		});
+		Button btnBackToMainCard = new Button("Tilbake");
+		btnBackToMainCard.setForeground(Colors.BLACK);
+		btnBackToMainCard.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		btnBackToMainCard.setFocusPainted(false);
+		btnBackToMainCard.setBackground(Colors.GRAY_LIGHT);
+		btnBackToMainCard.setBounds(25, 25, 100, 30);
+		btnBackToMainCard.setVisible(false);
+		contentPane.add(btnBackToMainCard);
 		
 		// Setup main panel
 		JPanel cards = new JPanel();
@@ -174,13 +164,12 @@ public class MainFrame extends JFrame {
 		
 		// Back button extra
 		// Must be under cards
-		btnTilbake.setBorder(emptyBorder);
-		btnTilbake.addActionListener(new ActionListener() {
+		btnBackToMainCard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cardLayout = (CardLayout) cards.getLayout();
 				cardLayout.show(cards, "cardMain");
-				btnTilbake.setVisible(false);
+				btnBackToMainCard.setVisible(false);
 			}
 		});
 
@@ -227,32 +216,14 @@ public class MainFrame extends JFrame {
 		String[] buttons = {/*"L\u00E5n",*/ "Personer", "Kurs", "Avdelinger"};
 		for (int i = 0; i < buttons.length; i++) {
 			String btnText = buttons[i];
-
-			JButton btnTmp = new JButton(buttons[i]);
-			btnTmp.setForeground(colorWhite);
-			btnTmp.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
-			btnTmp.setBackground(colorPrimary);
-			btnTmp.setBorder(emptyBorder);
-			btnTmp.setFocusPainted(false);
-			btnTmp.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
-			btnTmp.addMouseListener(new java.awt.event.MouseAdapter() {
-			    public void mouseEntered(java.awt.event.MouseEvent evt) {
-			    	btnTmp.setBackground(new Color(215, 120, 105));
-			    	UIManager.put("Button.select", colorSecondary);
-			    }
-
-			    public void mouseExited(java.awt.event.MouseEvent evt) {
-			    	btnTmp.setBackground(colorPrimary);
-			    }
-			});
+			Button btnTmp = new Button(buttons[i]);
 			
 			btnTmp.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					CardLayout cardLayout = (CardLayout) cards.getLayout();
 					cardLayout.show(cards, "card" + btnText);
-					btnTilbake.setVisible(true);
+					btnBackToMainCard.setVisible(true);
 				}
 			});
 			
@@ -333,7 +304,7 @@ public class MainFrame extends JFrame {
 		panel.setBackground(Color.WHITE);
 		cdBody.add(panel);
 		
-		JButton cdBtnCreate = new JButton("Opprett");
+		Button cdBtnCreate = new Button("Opprett");
 		cdBtnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Check that the user filled out fields before trying to create department
@@ -427,7 +398,7 @@ public class MainFrame extends JFrame {
         JLabel lblNavn = new JLabel("Navn");
         ccBody.add(lblNavn);
         
-        JButton ccBtnCreate = new JButton("Opprett");
+        Button ccBtnCreate = new Button("Opprett");
         ccBtnCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 				// Check that the user filled out fields before trying to create course
@@ -536,7 +507,7 @@ public class MainFrame extends JFrame {
         cardPerson.add(cpBody, gbc_cpBody);
         cpBody.setLayout(new GridLayout(5, 3, 50, 15));
         
-        JButton cpBtnCreate = new JButton("Videre");
+        Button cpBtnCreate = new Button("Videre");
         cpBtnCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 // Check that the user filled out fields before trying to create person
@@ -551,7 +522,7 @@ public class MainFrame extends JFrame {
                     
                     if (cpCbTypes.getSelectedItem().equals("Student")) {
                     	// Hide back button and show course select card
-                    	btnTilbake.setVisible(false);
+                    	btnBackToMainCard.setVisible(false);
     					CardLayout cardLayout = (CardLayout) cards.getLayout();
     					cardLayout.show(cards, "cardCourseSelect");
     					
@@ -568,7 +539,7 @@ public class MainFrame extends JFrame {
     	                        cpTfPhone.setText("");
     							
     							// Show back button and go back to person card
-    	                        btnTilbake.setVisible(true);
+    	                        btnBackToMainCard.setVisible(true);
     	                        CardLayout cardLayout = (CardLayout) cards.getLayout();
     	    					cardLayout.show(cards, "cardPersoner");
     	    					updateLists();
@@ -576,9 +547,9 @@ public class MainFrame extends JFrame {
     					});
     					
     					// Abort course selection
-    					btnAvbryt.addActionListener(new ActionListener() {
+    					ccsBtnCancel.addActionListener(new ActionListener() {
     						public void actionPerformed(ActionEvent e) {
-    							btnTilbake.setVisible(true);
+    							btnBackToMainCard.setVisible(true);
     	    					CardLayout cardLayout = (CardLayout) cards.getLayout();
     	    					cardLayout.show(cards, "cardPersoner");
     						}
@@ -762,7 +733,6 @@ public class MainFrame extends JFrame {
 		cardCourseSelect.add(ccsFooter, gbc_ccsFooter);
 		ccsFooter.setLayout(new BorderLayout(0, 0));
 		
-		ccsBtnDone.setForeground(colorWhite);
 		ccsBtnDone.setBackground(colorSuccess);
 		ccsFooter.add(ccsBtnDone, BorderLayout.EAST);
 		
