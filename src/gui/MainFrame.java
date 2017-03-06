@@ -65,6 +65,30 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		// Back button
+		JButton btnTilbake = new JButton("Tilbake");
+		btnTilbake.setForeground(colorBlack);
+		btnTilbake.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		btnTilbake.setFocusPainted(false);
+		btnTilbake.setBackground(colorGrayLight);
+		btnTilbake.setBounds(25, 25, 100, 30);
+		btnTilbake.setVisible(false);
+		contentPane.add(btnTilbake);
+		
+		btnTilbake.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnTilbake.setBackground(colorSecondary);
+		    	btnTilbake.setForeground(colorWhite);
+		    	UIManager.put("Button.select", colorSecondary);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnTilbake.setForeground(colorBlack);
+		    	btnTilbake.setBackground(colorGrayLight);
+		    }
+		});
+		
 		// Setup main panel
 		JPanel cards = new JPanel();
 		cards.setBorder(new EmptyBorder(0, 0, 0, 0));
