@@ -49,6 +49,11 @@ public class MainFrame extends JFrame {
 		Font fontRegularBold   = new Font("Segoe UI Black", Font.PLAIN, fontRegularSize);
 		
 		ImageIcon appIcon      = new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\emblem-512.png");
+		
+		Border emptyBorder     = BorderFactory.createEmptyBorder();
+		
+		Insets insets = new Insets(0, 0, 0, 0);
+		
 		setIconImage(appIcon.getImage());
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
