@@ -50,10 +50,75 @@ public class MainFrame extends JFrame {
 		
 		ImageIcon appIcon      = new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\emblem-512.png");
 		setIconImage(appIcon.getImage());
+		setBackground(Color.WHITE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 750, 500);
+		setMinimumSize(new Dimension(500, 400));
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		// Setup main panel
+		JPanel cards = new JPanel();
+		cards.setBorder(new EmptyBorder(0, 0, 0, 0));
+		cards.setBounds(0, 0, 732, 453);
+		contentPane.add(cards);
+		cards.setLayout(new CardLayout(0, 0));
+
+		// So the absolute positioned cards panel will resize on window resize
+		addComponentListener(new ComponentAdapter() {
+		    public void componentResized(ComponentEvent e) {
+		        cards.setBounds(0, 0, getWidth(), getHeight());           
+		    }
+		});
+		
+//		So the absolute positioned cards panel will resize on window maximize
+		addWindowStateListener(new WindowStateListener() {
+			@Override
+			public void windowStateChanged(WindowEvent e) {
+				cards.setBounds(0, 0, getWidth(), getHeight());
+			}
+		});
+		
+		//// cardMain - Start ////
+		JPanel cardMain = new JPanel();
+		cardMain.setBackground(Color.WHITE);
+		cardMain.setLayout(new MigLayout("insets 0", "[::100%,grow,center]", "[75px:n,grow 20][150px:n,grow 40][100px:n,grow 40]"));
+		
+		JPanel cmHeader = new JPanel();
+		cardMain.add(cmHeader, "cell 0 0,grow");
+		cmHeader.setBackground(Color.WHITE);
+		cmHeader.setLayout(new BorderLayout(0, 0));
+		
+		JLabel c1HeaderHeading = new JLabel("Maker Loan");
+		cmHeader.add(c1HeaderHeading, BorderLayout.CENTER);
+		c1HeaderHeading.setBackground(Color.WHITE);
+		c1HeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		c1HeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+		
+		JPanel cmBody = new JPanel();
+		cardMain.add(cmBody, "cell 0 1,grow");
+//		cmBody.setBorder(new EmptyBorder(25, 100, 100, 100)); // BORDER FOR WHEN LOAN IS ADDED
+		cmBody.setBorder(new EmptyBorder(50, 100, 50, 100));
+		cmBody.setBackground(Color.WHITE);
+//		cmBody.setLayout(new GridLayout(2, 2, 50, 25)); // LAYOUT FOR WHEN LOAN IS ADDED
+		cmBody.setLayout(new GridLayout(1, 3, 50, 25));
+				
+		JPanel cmFooter = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) cmFooter.getLayout();
+		flowLayout.setVgap(0);
+		flowLayout.setHgap(0);
+		cardMain.add(cmFooter, "cell 0 2,grow");
+		cmFooter.setBorder(new EmptyBorder(10, 0, 0, 0));
+		cmFooter.setBackground(Color.WHITE);
+		
+		JLabel c1FooterImage = new JLabel("");
+		c1FooterImage.setVerticalAlignment(SwingConstants.BOTTOM);
+		c1FooterImage.setBackground(Color.WHITE);
+		c1FooterImage.setIcon(new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\m\u00F8nster-gr\u00E5.png"));
+		cmFooter.add(c1FooterImage);
+		//// cardMain - End ////
 	}
 }
