@@ -777,6 +777,10 @@ public class MainFrame extends JFrame {
 		// Add card
 		cards.add(cardCourseSelect, "cardCourseSelect");
 		//// cardCourseSelect - End ////
+		
+		updateLists();
+	}
+
 	public void updateLists() {
 		// for departments card
 		departmentList.setListData(Department.toStrings());
