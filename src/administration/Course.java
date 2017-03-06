@@ -80,12 +80,12 @@ public class Course {
 	/**
 	 * Runs toString method on all the items in the course list that belong to a department and returns them in an array
 	 */
-	public static Object[] toStrings(String departmentCode) {
+	public static Object[] toStrings(Department department) {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (int i = 0; i < courses.size(); i++) {
 			Course course = courses.get(i);
 			
-			if (course.getDepartment().getCode().equals(departmentCode)) {
+			if (course.getDepartment().equals(department)) {
 				strings.add(course.toString());
 			}
 		}
