@@ -149,5 +149,89 @@ public class MainFrame extends JFrame {
 		c1FooterImage.setIcon(new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\m\u00F8nster-gr\u00E5.png"));
 		cmFooter.add(c1FooterImage);
 		//// cardMain - End ////
+		
+		//// cardDepartment - Start ////
+		JPanel cardDepartment = new JPanel();
+		cardDepartment.setBackground(Color.WHITE);
+		cardDepartment.setBorder(emptyBorder);
+        GridBagLayout cardDepartmentsGbLayout = new GridBagLayout();
+        cardDepartmentsGbLayout.columnWidths = new int[] {getWidth()};
+        cardDepartmentsGbLayout.rowHeights = new int[] {100, 150, 200};
+        cardDepartmentsGbLayout.columnWeights = new double[]{1.0};
+        cardDepartmentsGbLayout.rowWeights = new double[]{0.0, 0.0, 1.0};
+		cardDepartment.setLayout(cardDepartmentsGbLayout);
+		
+		JPanel cdHeader = new JPanel();
+		cdHeader.setBackground(Color.WHITE);
+		GridBagConstraints gbc_cdHeader = new GridBagConstraints();
+		gbc_cdHeader.fill = GridBagConstraints.BOTH;
+		gbc_cdHeader.insets = insets;
+		gbc_cdHeader.gridx = 0;
+		gbc_cdHeader.gridy = 0;
+		cardDepartment.add(cdHeader, gbc_cdHeader);
+		cdHeader.setLayout(new BorderLayout(0, 0));
+		
+		cdHeaderHeading = new JLabel("Avdelinger oversikt");
+		cdHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		cdHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+		cdHeaderHeading.setBackground(Color.WHITE);
+		cdHeader.add(cdHeaderHeading, BorderLayout.CENTER);
+		
+		JPanel cdBody = new JPanel();
+		cdBody.setBorder(new EmptyBorder(0, 100, 25, 100));
+		cdBody.setBackground(Color.WHITE);
+		GridBagConstraints gbc_cdBody = new GridBagConstraints();
+		gbc_cdBody.fill = GridBagConstraints.BOTH;
+		gbc_cdBody.insets = insets;
+		gbc_cdBody.gridx = 0;
+		gbc_cdBody.gridy = 1;
+		cardDepartment.add(cdBody, gbc_cdBody);
+		cdBody.setLayout(new GridLayout(0, 2, 50, 15));
+		
+		JLabel lblTing = new JLabel("Kode");
+		cdBody.add(lblTing);
+		
+		JLabel lblPerson = new JLabel("Navn");
+		cdBody.add(lblPerson);
+		
+		cdTfCode = new JTextField();
+		cdTfCode.setColumns(10);
+		cdBody.add(cdTfCode);
+		
+		cdTfName = new JTextField();
+		cdBody.add(cdTfName);
+		cdTfName.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		cdBody.add(panel);
+		
+		JButton cdBtnCreate = new JButton("Opprett");
+		cdBtnCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Check that the user filled out fields before trying to create department
+				if (cdTfCode.getText().length() != 0 && cdTfName.getText().length() != 0) {
+					// Check if the department exists before trying to create it
+					if (Department.exist(cdTfCode.getText())) {
+						error("Avdeling " + cdTfCode.getText() + " - " + cdTfName.getText() + " finnes allerede");
+						return;
+					}
+					
+					// Everything is ok, create the department
+					new Department(cdTfName.getText(), cdTfCode.getText());
+					cdTfName.setText("");
+					cdTfCode.setText("");
+					updateLists();
+				} else {
+					return;
+				}
+			}
+		});
+		cdBody.add(cdBtnCreate);
+		//// cardDepartment - End ////
+	public void updateLists() {
+		// for departments card
+		departmentList.setListData(Department.toStrings());
+	}
 	}
 }
