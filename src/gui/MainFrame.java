@@ -210,6 +210,41 @@ public class MainFrame extends JFrame {
 		cmBody.setBackground(Color.WHITE);
 //		cmBody.setLayout(new GridLayout(2, 2, 50, 25)); // LAYOUT FOR WHEN LOAN IS ADDED
 		cmBody.setLayout(new GridLayout(1, 3, 50, 25));
+		
+		// mainCard buttons
+		String[] buttons = {/*"L�n",*/ "Personer", "Kurs", "Avdelinger"}		for (int i = 0; i < buttons.length; i++) {
+			String btnText = buttons[i];
+
+			JButton btnTmp = new JButton(buttons[i]);
+			btnTmp.setForeground(colorWhite);
+			btnTmp.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
+			btnTmp.setBackground(colorPrimary);
+			btnTmp.setBorder(emptyBorder);
+			btnTmp.setFocusPainted(false);
+			btnTmp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			
+			btnTmp.addMouseListener(new java.awt.event.MouseAdapter() {
+			    public void mouseEntered(java.awt.event.MouseEvent evt) {
+			    	btnTmp.setBackground(new Color(215, 120, 105));
+			    	UIManager.put("Button.select", colorSecondary);
+			    }
+
+			    public void mouseExited(java.awt.event.MouseEvent evt) {
+			    	btnTmp.setBackground(colorPrimary);
+			    }
+			});
+			
+			btnTmp.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					CardLayout cardLayout = (CardLayout) cards.getLayout();
+					cardLayout.show(cards, "card" + btnText);
+					btnTilbake.setVisible(true);
+				}
+			});
+			
+			cmBody.add(btnTmp);
+		}
 				
 		JPanel cmFooter = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) cmFooter.getLayout();
