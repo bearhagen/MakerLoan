@@ -171,6 +171,18 @@ public class MainFrame extends JFrame {
 		cards.setBounds(0, 0, 732, 453);
 		contentPane.add(cards);
 		cards.setLayout(new CardLayout(0, 0));
+		
+		// Back button extra
+		// Must be under cards
+		btnTilbake.setBorder(emptyBorder);
+		btnTilbake.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cardLayout = (CardLayout) cards.getLayout();
+				cardLayout.show(cards, "cardMain");
+				btnTilbake.setVisible(false);
+			}
+		});
 
 		// So the absolute positioned cards panel will resize on window resize
 		addComponentListener(new ComponentAdapter() {
