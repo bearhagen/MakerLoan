@@ -2,8 +2,6 @@ package administration;
 
 import java.util.ArrayList;
 
-import hr.Person;
-
 public class Department {
 	private String name;
 	private String code;
