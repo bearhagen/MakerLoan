@@ -48,6 +48,8 @@ public class MainFrame extends JFrame {
 		Font fontRegular       = new Font("Segoe UI", Font.PLAIN, fontRegularSize);
 		Font fontRegularBold   = new Font("Segoe UI Black", Font.PLAIN, fontRegularSize);
 		
+		ImageIcon appIcon      = new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\emblem-512.png");
+		setIconImage(appIcon.getImage());
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
