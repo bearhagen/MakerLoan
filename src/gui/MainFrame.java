@@ -341,6 +341,27 @@ public class MainFrame extends JFrame {
 			}
 		});
 		cdBody.add(cdBtnCreate);
+		
+		JPanel cdFooter = new JPanel();
+		cdFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
+		cdFooter.setBackground(colorGrayLight);
+		GridBagConstraints gbc_cdFooter = new GridBagConstraints();
+		gbc_cdFooter.fill = GridBagConstraints.BOTH;
+		gbc_cdFooter.gridx = 0;
+		gbc_cdFooter.gridy = 2;
+		cardDepartment.add(cdFooter, gbc_cdFooter);
+		cdFooter.setLayout(new BorderLayout(0, 0));
+		
+        departmentList = new JList<Object>();
+        departmentList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        departmentList.setBackground(colorGrayLight);
+        departmentList.setFixedCellHeight(fontListLineHeight);
+        
+        JScrollPane cdFooterScrollPane = new JScrollPane();
+        cdFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, (Color) new Color(236, 234, 229)));
+        cdFooterScrollPane.setBorder(emptyBorder);
+        cdFooter.add(cdFooterScrollPane, BorderLayout.CENTER);
+        cdFooterScrollPane.setViewportView(departmentList);
 		//// cardDepartment - End ////
 
 		//// cardCourse - Start ////
