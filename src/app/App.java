@@ -1,31 +1,30 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import administration.*;
-import hr.*;
-import inventory.*;
+import administration.Course;
+import administration.Department;
+import gui.*;
+import hr.Student;
+import inventory.Item;
+import inventory.Loan;
 
 public class App {
 	public static void main(String[] args) {
-		// Make the IT department and the computer engineer course
 		Department it = new Department("Avdeling for informasjonsteknologi", "IT123");
 		Course oop = new Course("Objektorientert programmering", "idk1234", it);
+		Course datatek = new Course("Datateknikk", "idk1235", it);
+		ArrayList<Course> olasKurs = new ArrayList<Course>();
+		olasKurs.add(oop);
+		olasKurs.add(datatek);
 		
-		// Make our student
-		Student ola = new Student("Ola", "Nordmann", "12345678", oop, "000001");
+		Student ola = new Student("Ola", "Nordmann", "12345678", it, olasKurs, "000001");
+		Student kari = new Student("Kari", "Nordmann", "12345678", it, olasKurs, "000002");
+		Item laptop = new Item("Dell XPS 13", 00000001);
+		Item mobil = new Item("iPhone 7", 00000002);		
 		
-		// Our student loans a laptop
-		Item laptop = new Item("Dell XPS 13");
-		Loan olasLaptop = new Loan(laptop, ola, new GregorianCalendar());
-		
-		
-		
-		// Print info
-		System.out.print(olasLaptop.getLoanDate().getTime());
-		System.out.print(" lånte " + olasLaptop.getPerson().getName() + " " + olasLaptop.getPerson().getSurName() + " ");
-		System.out.println(olasLaptop.getItem().getAmount() + " " + olasLaptop.getItem().getName());
-		
-		System.out.print(olasLaptop.getPerson().getName() + " " + olasLaptop.getPerson().getSurName() + " er " + olasLaptop.getPerson().getClass().getSimpleName());
+		// Start the GUI
+		MainFrame.main(null);
 	}
 }
