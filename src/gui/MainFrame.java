@@ -99,32 +99,13 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame() {
-		Color colorRed         = new Color(194, 111, 125);
-		Color colorMagenta     = new Color(163, 150, 163);
-		Color colorBlue        = new Color(111, 167, 194);
-		Color colorGreen       = new Color(111, 194, 180);
-		Color colorGreenDark   = new Color(52, 126, 132);
-		Color colorYellow      = new Color(194, 180, 111);
-		Color colorOrange      = new Color(215, 120, 105);
-		Color colorWhite       = new Color(255, 255, 255);
-		Color colorBlack       = new Color(35, 32, 31);
-		Color colorGreyLight   = new Color(236, 234, 229);   Color colorGrayLight = colorGreyLight;
-		Color colorGrey        = new Color(200, 194, 190);   Color colorGray      = colorGrey;
-		Color colorPrimary     = colorGreen; 
-		Color colorPrimaryDark = colorGreenDark;
-		Color colorSecondary   = colorOrange;
-		Color colorTertiary    = colorMagenta;
-		Color colorSuccess     = colorGreen;
-		Color colorInfo        = colorBlue;
-		Color colorAlert       = colorRed;
-		
+	public MainFrame() {		
 		int fontListLineHeight = 40;
 		int fontRegularSize    = 15;
 		int fontHeadingsSize   = 24;
 		Font fontHeadings      = new Font("Segoe UI", Font.PLAIN, fontHeadingsSize);
 		Font fontRegular       = new Font("Segoe UI", Font.PLAIN, fontRegularSize);
-		Font fontRegularBold   = new Font("Segoe UI Black", Font.PLAIN, fontRegularSize);
+		Font fontRegularBold   = new Font("Segoe UI BLACK", Font.PLAIN, fontRegularSize);
 		
 		ImageIcon appIcon      = new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\emblem-512.png");
 		
@@ -134,13 +115,13 @@ public class MainFrame extends JFrame {
 		
 		setIconImage(appIcon.getImage());
 		setTitle("MakerLoan - Hi\u00D8");
-		setBackground(Color.WHITE);
+		setBackground(Colors.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
 		setMinimumSize(new Dimension(500, 400));
 		
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(Colors.WHITE);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -190,17 +171,17 @@ public class MainFrame extends JFrame {
 		
 		//// cardMain - Start ////
 		JPanel cardMain = new JPanel();
-		cardMain.setBackground(Color.WHITE);
+		cardMain.setBackground(Colors.WHITE);
 		cardMain.setLayout(new MigLayout("insets 0", "[::100%,grow,center]", "[75px:n,grow 20][150px:n,grow 40][100px:n,grow 40]"));
 		
 		JPanel cmHeader = new JPanel();
 		cardMain.add(cmHeader, "cell 0 0,grow");
-		cmHeader.setBackground(Color.WHITE);
+		cmHeader.setBackground(Colors.WHITE);
 		cmHeader.setLayout(new BorderLayout(0, 0));
 		
 		JLabel c1HeaderHeading = new JLabel("Maker Loan");
 		cmHeader.add(c1HeaderHeading, BorderLayout.CENTER);
-		c1HeaderHeading.setBackground(Color.WHITE);
+		c1HeaderHeading.setBackground(Colors.WHITE);
 		c1HeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		c1HeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
 		
@@ -208,7 +189,7 @@ public class MainFrame extends JFrame {
 		cardMain.add(cmBody, "cell 0 1,grow");
 //		cmBody.setBorder(new EmptyBorder(25, 100, 100, 100)); // BORDER FOR WHEN LOAN IS ADDED
 		cmBody.setBorder(new EmptyBorder(50, 100, 50, 100));
-		cmBody.setBackground(Color.WHITE);
+		cmBody.setBackground(Colors.WHITE);
 //		cmBody.setLayout(new GridLayout(2, 2, 50, 25)); // LAYOUT FOR WHEN LOAN IS ADDED
 		cmBody.setLayout(new GridLayout(1, 3, 50, 25));
 		
@@ -236,11 +217,11 @@ public class MainFrame extends JFrame {
 		flowLayout.setHgap(0);
 		cardMain.add(cmFooter, "cell 0 2,grow");
 		cmFooter.setBorder(new EmptyBorder(10, 0, 0, 0));
-		cmFooter.setBackground(Color.WHITE);
+		cmFooter.setBackground(Colors.WHITE);
 		
 		JLabel c1FooterImage = new JLabel("");
 		c1FooterImage.setVerticalAlignment(SwingConstants.BOTTOM);
-		c1FooterImage.setBackground(Color.WHITE);
+		c1FooterImage.setBackground(Colors.WHITE);
 		c1FooterImage.setIcon(new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\m\u00F8nster-gr\u00E5.png"));
 		cmFooter.add(c1FooterImage);
 		
@@ -250,7 +231,7 @@ public class MainFrame extends JFrame {
 		
 		//// cardDepartment - Start ////
 		JPanel cardDepartment = new JPanel();
-		cardDepartment.setBackground(Color.WHITE);
+		cardDepartment.setBackground(Colors.WHITE);
 		cardDepartment.setBorder(emptyBorder);
         GridBagLayout cardDepartmentsGbLayout = new GridBagLayout();
         cardDepartmentsGbLayout.columnWidths = new int[] {getWidth()};
@@ -260,7 +241,7 @@ public class MainFrame extends JFrame {
 		cardDepartment.setLayout(cardDepartmentsGbLayout);
 		
 		JPanel cdHeader = new JPanel();
-		cdHeader.setBackground(Color.WHITE);
+		cdHeader.setBackground(Colors.WHITE);
 		GridBagConstraints gbc_cdHeader = new GridBagConstraints();
 		gbc_cdHeader.fill = GridBagConstraints.BOTH;
 		gbc_cdHeader.insets = insets;
@@ -272,12 +253,12 @@ public class MainFrame extends JFrame {
 		cdHeaderHeading = new JLabel("Avdelinger oversikt");
 		cdHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		cdHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-		cdHeaderHeading.setBackground(Color.WHITE);
+		cdHeaderHeading.setBackground(Colors.WHITE);
 		cdHeader.add(cdHeaderHeading, BorderLayout.CENTER);
 		
 		JPanel cdBody = new JPanel();
 		cdBody.setBorder(new EmptyBorder(0, 100, 25, 100));
-		cdBody.setBackground(Color.WHITE);
+		cdBody.setBackground(Colors.WHITE);
 		GridBagConstraints gbc_cdBody = new GridBagConstraints();
 		gbc_cdBody.fill = GridBagConstraints.BOTH;
 		gbc_cdBody.insets = insets;
@@ -301,7 +282,7 @@ public class MainFrame extends JFrame {
 		cdTfName.setColumns(10);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(Colors.WHITE);
 		cdBody.add(panel);
 		
 		Button cdBtnCreate = new Button("Opprett");
@@ -330,7 +311,7 @@ public class MainFrame extends JFrame {
 		
 		JPanel cdFooter = new JPanel();
 		cdFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
-		cdFooter.setBackground(colorGrayLight);
+		cdFooter.setBackground(Colors.GRAY_LIGHT);
 		GridBagConstraints gbc_cdFooter = new GridBagConstraints();
 		gbc_cdFooter.fill = GridBagConstraints.BOTH;
 		gbc_cdFooter.gridx = 0;
@@ -340,7 +321,7 @@ public class MainFrame extends JFrame {
 		
         departmentList = new JList<Object>();
         departmentList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        departmentList.setBackground(colorGrayLight);
+        departmentList.setBackground(Colors.GRAY_LIGHT);
         departmentList.setFixedCellHeight(fontListLineHeight);
         
         JScrollPane cdFooterScrollPane = new JScrollPane();
@@ -355,7 +336,7 @@ public class MainFrame extends JFrame {
 
 		//// cardCourse - Start ////
         JPanel cardCourse = new JPanel();
-        cardCourse.setBackground(Color.WHITE);
+        cardCourse.setBackground(Colors.WHITE);
         cardCourse.setBorder(emptyBorder);
         GridBagLayout cardCourseGbLayout = new GridBagLayout();
         cardCourseGbLayout.columnWidths = new int[] {getWidth()};
@@ -365,7 +346,7 @@ public class MainFrame extends JFrame {
         cardCourse.setLayout(cardCourseGbLayout);
         
         JPanel ccHeader = new JPanel();
-        ccHeader.setBackground(Color.WHITE);
+        ccHeader.setBackground(Colors.WHITE);
         GridBagConstraints gbc_ccHeader = new GridBagConstraints();
         gbc_ccHeader.fill = GridBagConstraints.BOTH;
         gbc_ccHeader.gridx = 0;
@@ -376,12 +357,12 @@ public class MainFrame extends JFrame {
         ccHeaderHeading = new JLabel("Kurs oversikt");
         ccHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
         ccHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        ccHeaderHeading.setBackground(Color.WHITE);
+        ccHeaderHeading.setBackground(Colors.WHITE);
         ccHeader.add(ccHeaderHeading, BorderLayout.CENTER);
         
         JPanel ccBody = new JPanel();
         ccBody.setBorder(new EmptyBorder(0, 100, 25, 100));
-        ccBody.setBackground(Color.WHITE);
+        ccBody.setBackground(Colors.WHITE);
         GridBagConstraints gbc_ccBody = new GridBagConstraints();
         gbc_ccBody.fill = GridBagConstraints.BOTH;
         gbc_ccBody.gridx = 0;
@@ -435,20 +416,20 @@ public class MainFrame extends JFrame {
         ccTfName.setColumns(10);
         
         JPanel panel_2 = new JPanel();
-        panel_2.setBackground(Color.WHITE);
+        panel_2.setBackground(Colors.WHITE);
         ccBody.add(panel_2);
         
         JPanel panel_1 = new JPanel();
-        panel_1.setBackground(Color.WHITE);
+        panel_1.setBackground(Colors.WHITE);
         ccBody.add(panel_1);
         ccBody.add(ccBtnCreate);
-        panel_2.setBackground(Color.WHITE);
+        panel_2.setBackground(Colors.WHITE);
         ccCbDepartments.setPrototypeDisplayValue("Lorem ipsum dolor");
-        panel_1.setBackground(Color.WHITE);
+        panel_1.setBackground(Colors.WHITE);
         
         JPanel ccFooter = new JPanel();
         ccFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
-        ccFooter.setBackground(colorGrayLight);
+        ccFooter.setBackground(Colors.GRAY_LIGHT);
         GridBagConstraints gbc_ccFooter = new GridBagConstraints();
         gbc_ccFooter.fill = GridBagConstraints.BOTH;
         gbc_ccFooter.gridx = 0;
@@ -458,11 +439,11 @@ public class MainFrame extends JFrame {
         
         courseList = new JList<Object>();
         courseList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        courseList.setBackground(colorGrayLight);
+        courseList.setBackground(Colors.GRAY_LIGHT);
         courseList.setFixedCellHeight(fontListLineHeight);
         
         JScrollPane ccFooterScrollPane = new JScrollPane();
-        ccFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        ccFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, Colors.GRAY_LIGHT));
         ccFooterScrollPane.setBorder(emptyBorder);
         ccFooter.add(ccFooterScrollPane, BorderLayout.CENTER);
         ccFooterScrollPane.setViewportView(courseList);
@@ -473,7 +454,7 @@ public class MainFrame extends JFrame {
 		
 		//// cardPerson - Start ////
         JPanel cardPerson = new JPanel();
-        cardPerson.setBackground(Color.WHITE);
+        cardPerson.setBackground(Colors.WHITE);
         cardPerson.setBorder(emptyBorder);
         GridBagLayout gbl_cardPerson = new GridBagLayout();
         gbl_cardPerson.columnWidths = new int[] {732};
@@ -483,7 +464,7 @@ public class MainFrame extends JFrame {
         cardPerson.setLayout(gbl_cardPerson);
         
         JPanel cpHeader = new JPanel();
-        cpHeader.setBackground(Color.WHITE);
+        cpHeader.setBackground(Colors.WHITE);
         GridBagConstraints gbc_cpHeader = new GridBagConstraints();
         gbc_cpHeader.fill = GridBagConstraints.BOTH;
         gbc_cpHeader.gridx = 0;
@@ -494,12 +475,12 @@ public class MainFrame extends JFrame {
         JLabel cpHeaderHeading = new JLabel("Person oversikt");
         cpHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
         cpHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        cpHeaderHeading.setBackground(Color.WHITE);
+        cpHeaderHeading.setBackground(Colors.WHITE);
         cpHeader.add(cpHeaderHeading, BorderLayout.CENTER);
         
         JPanel cpBody = new JPanel();
         cpBody.setBorder(new EmptyBorder(0, 100, 25, 100));
-        cpBody.setBackground(Color.WHITE);
+        cpBody.setBackground(Colors.WHITE);
         GridBagConstraints gbc_cpBody = new GridBagConstraints();
         gbc_cpBody.fill = GridBagConstraints.BOTH;
         gbc_cpBody.gridx = 0;
@@ -627,17 +608,17 @@ public class MainFrame extends JFrame {
         cpBody.add(cpCbTypes);
         
         JPanel panel_3 = new JPanel();
-        panel_3.setBackground(Color.WHITE);
+        panel_3.setBackground(Colors.WHITE);
         cpBody.add(panel_3);
         
         JPanel panel_4 = new JPanel();
-        panel_4.setBackground(Color.WHITE);
+        panel_4.setBackground(Colors.WHITE);
         cpBody.add(panel_4);
         cpBody.add(cpBtnCreate);
         
         JPanel cpFooter = new JPanel();
         cpFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
-        cpFooter.setBackground(colorGrayLight);
+        cpFooter.setBackground(Colors.GRAY_LIGHT);
         GridBagConstraints gbc_cpFooter = new GridBagConstraints();
         gbc_cpFooter.fill = GridBagConstraints.BOTH;
         gbc_cpFooter.gridx = 0;
@@ -647,11 +628,11 @@ public class MainFrame extends JFrame {
         
         personList = new JList<Object>();
         personList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        personList.setBackground(colorGrayLight);
+        personList.setBackground(Colors.GRAY_LIGHT);
         personList.setFixedCellHeight(fontListLineHeight);
         
         JScrollPane cpFooterScrollPane = new JScrollPane();
-        cpFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        cpFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, Colors.GRAY_LIGHT));
         cpFooterScrollPane.setBorder(emptyBorder);
         cpFooter.add(cpFooterScrollPane, BorderLayout.CENTER);
         cpFooterScrollPane.setViewportView(personList);
@@ -662,7 +643,7 @@ public class MainFrame extends JFrame {
         
 		//// cardCourseSelect - Start ////
         JPanel cardCourseSelect = new JPanel();
-        cardCourseSelect.setBackground(Color.WHITE);
+        cardCourseSelect.setBackground(Colors.WHITE);
         cardCourseSelect.setBorder(emptyBorder);
         GridBagLayout gbl_cardCourseSelect = new GridBagLayout();
         gbl_cardCourseSelect.columnWidths = new int[] {732};
@@ -672,7 +653,7 @@ public class MainFrame extends JFrame {
         cardCourseSelect.setLayout(gbl_cardCourseSelect);
         
         JPanel ccsHeader = new JPanel();
-        ccsHeader.setBackground(Color.WHITE);
+        ccsHeader.setBackground(Colors.WHITE);
         GridBagConstraints gbc_ccsHeader = new GridBagConstraints();
         gbc_ccsHeader.fill = GridBagConstraints.BOTH;
         gbc_ccsHeader.gridx = 0;
@@ -683,12 +664,12 @@ public class MainFrame extends JFrame {
         JLabel ccsHeaderHeading = new JLabel("Velg kurs");
         ccsHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
         ccsHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        ccsHeaderHeading.setBackground(Color.WHITE);
+        ccsHeaderHeading.setBackground(Colors.WHITE);
         ccsHeader.add(ccsHeaderHeading, BorderLayout.CENTER);
         
         JPanel ccsBody = new JPanel();
         ccsBody.setBorder(new EmptyBorder(0, 0, 0, 17));
-        ccsBody.setBackground(Color.WHITE);
+        ccsBody.setBackground(Colors.WHITE);
         GridBagConstraints gbc_ccsBody = new GridBagConstraints();
         gbc_ccsBody.gridheight = 2;
         gbc_ccsBody.fill = GridBagConstraints.BOTH;
@@ -714,18 +695,18 @@ public class MainFrame extends JFrame {
 
         courseSelectList.setBorder(null);
         courseSelectList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        courseSelectList.setBackground(colorGrayLight);
+        courseSelectList.setBackground(Colors.GRAY_LIGHT);
         courseSelectList.setFixedCellHeight(fontListLineHeight);
         
         JScrollPane ccsFooterScrollPane = new JScrollPane();
         ccsBody.add(ccsFooterScrollPane);
-        ccsFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        ccsFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, Colors.GRAY_LIGHT));
         ccsFooterScrollPane.setBorder(emptyBorder);
         ccsFooterScrollPane.setViewportView(courseSelectList);
         
 		JPanel ccsFooter = new JPanel();
 		ccsFooter.setBorder(new EmptyBorder(10, 100, 10, 100));
-		ccsFooter.setBackground(Color.WHITE);
+		ccsFooter.setBackground(Colors.WHITE);
 		GridBagConstraints gbc_ccsFooter = new GridBagConstraints();
 		gbc_ccsFooter.fill = GridBagConstraints.BOTH;
 		gbc_ccsFooter.gridx = 0;
@@ -733,16 +714,15 @@ public class MainFrame extends JFrame {
 		cardCourseSelect.add(ccsFooter, gbc_ccsFooter);
 		ccsFooter.setLayout(new BorderLayout(0, 0));
 		
-		ccsBtnDone.setBackground(colorSuccess);
+		ccsBtnDone.setBackground(Colors.SUCCESS);
 		ccsFooter.add(ccsBtnDone, BorderLayout.EAST);
 		
 		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(Color.WHITE);
+		panel_6.setBackground(Colors.WHITE);
 		ccsFooter.add(panel_6);
 		
-		btnAvbryt.setForeground(colorWhite);
-		btnAvbryt.setBackground(colorAlert);
-		ccsFooter.add(btnAvbryt, BorderLayout.WEST);
+		ccsBtnCancel.setBackground(Colors.ALERT);
+		ccsFooter.add(ccsBtnCancel, BorderLayout.WEST);
 		
 		// Add card
 		cards.add(cardCourseSelect, "cardCourseSelect");
