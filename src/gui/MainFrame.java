@@ -61,6 +61,7 @@ public class MainFrame extends JFrame {
 		Insets insets = new Insets(0, 0, 0, 0);
 		
 		setIconImage(appIcon.getImage());
+		setTitle("MakerLoan - Hi\u00D8");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
