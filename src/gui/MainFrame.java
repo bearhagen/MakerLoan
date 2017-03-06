@@ -114,6 +114,11 @@ public class MainFrame extends JFrame {
 		
 		Insets insets = new Insets(0, 0, 0, 0);
 		
+		UIManager.put("ComboBox.background", new ColorUIResource(UIManager.getColor("TextField.background")));
+		UIManager.put("ComboBox.foreground", new ColorUIResource(UIManager.getColor("TextField.foreground")));
+		UIManager.put("ComboBox.selectionBackground", new ColorUIResource(Colors.INFO));
+		UIManager.put("ComboBox.selectionForeground", new ColorUIResource(Colors.WHITE));
+		
 		setIconImage(appIcon.getImage());
 		setTitle("MakerLoan - Hi\u00D8");
 		setBackground(Colors.WHITE);
