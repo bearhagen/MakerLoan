@@ -71,6 +71,10 @@ public class MainFrame extends JFrame {
 	private JTextField cpTfSurName;
 	private JTextField cpTfPhone;
 	
+	// Course select card
+	private JList<Object> courseSelectList;
+	private JButton ccsBtnDone = new JButton("Ferdig");
+	private JButton btnAvbryt = new JButton("Avbryt");
 
 
 	/**
@@ -603,6 +607,70 @@ public class MainFrame extends JFrame {
         cpFooter.add(cpFooterScrollPane, BorderLayout.CENTER);
         cpFooterScrollPane.setViewportView(personList);
 		//// cardPerson - End ////
+        
+		//// cardCourseSelect - Start ////
+        JPanel cardCourseSelect = new JPanel();
+        cardCourseSelect.setBackground(Color.WHITE);
+        cardCourseSelect.setBorder(emptyBorder);
+        GridBagLayout gbl_cardCourseSelect = new GridBagLayout();
+        gbl_cardCourseSelect.columnWidths = new int[] {732};
+        gbl_cardCourseSelect.rowHeights = new int[] {50, 50, 50, 50, 50};
+        gbl_cardCourseSelect.columnWeights = new double[]{1.0};
+        gbl_cardCourseSelect.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0};
+        cardCourseSelect.setLayout(gbl_cardCourseSelect);
+        
+        JPanel ccsHeader = new JPanel();
+        ccsHeader.setBackground(Color.WHITE);
+        GridBagConstraints gbc_ccsHeader = new GridBagConstraints();
+        gbc_ccsHeader.fill = GridBagConstraints.BOTH;
+        gbc_ccsHeader.gridx = 0;
+        gbc_ccsHeader.gridy = 0;
+        cardCourseSelect.add(ccsHeader, gbc_ccsHeader);
+        ccsHeader.setLayout(new BorderLayout(0, 0));
+        
+        JLabel ccsHeaderHeading = new JLabel("Velg kurs");
+        ccsHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        ccsHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        ccsHeaderHeading.setBackground(Color.WHITE);
+        ccsHeader.add(ccsHeaderHeading, BorderLayout.CENTER);
+        
+        JPanel ccsBody = new JPanel();
+        ccsBody.setBorder(new EmptyBorder(0, 0, 0, 17));
+        ccsBody.setBackground(Color.WHITE);
+        GridBagConstraints gbc_ccsBody = new GridBagConstraints();
+        gbc_ccsBody.gridheight = 2;
+        gbc_ccsBody.fill = GridBagConstraints.BOTH;
+        gbc_ccsBody.gridx = 0;
+        gbc_ccsBody.gridy = 1;
+        cardCourseSelect.add(ccsBody, gbc_ccsBody);
+        ccsBody.setLayout(new BorderLayout(0, 0));
+        
+        courseSelectList = new JList<Object>();
+
+        // Override default selection mode, so user can easily select multiple courses without any confusuion
+        courseSelectList.setSelectionModel(new DefaultListSelectionModel() {
+            @Override
+            public void setSelectionInterval(int index0, int index1) {
+                if(super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                }
+                else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
+
+        courseSelectList.setBorder(null);
+        courseSelectList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        courseSelectList.setBackground(colorGrayLight);
+        courseSelectList.setFixedCellHeight(fontListLineHeight);
+        
+        JScrollPane ccsFooterScrollPane = new JScrollPane();
+        ccsBody.add(ccsFooterScrollPane);
+        ccsFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        ccsFooterScrollPane.setBorder(emptyBorder);
+        ccsFooterScrollPane.setViewportView(courseSelectList);
+		//// cardCourseSelect - End ////
 	public void updateLists() {
 		// for departments card
 		departmentList.setListData(Department.toStrings());
