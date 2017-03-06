@@ -523,7 +523,7 @@ public class MainFrame extends JFrame {
     					// Done with course selection
     					ccsBtnDone.addActionListener(new ActionListener() {
     						public void actionPerformed(ActionEvent e) {
-    							new Student(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim(), selectedDepartment, new ArrayList(courseSelectList.getSelectedValuesList()), null);
+    							new Student(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim(), selectedDepartment, new ArrayList(courseSelectList.getSelectedValuesList()));
 
     							cpTfName.setText("");
     	                        cpTfSurName.setText("");
