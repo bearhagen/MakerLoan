@@ -371,5 +371,8 @@ public class MainFrame extends JFrame {
 		}
 	
 	}
+	
+	public void error(String errorMessage) {
+		JOptionPane.showMessageDialog(this, errorMessage);
 	}
 }
