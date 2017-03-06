@@ -8,6 +8,14 @@ public class MainFrame extends JFrame {
 	private JTextField cdTfName;
 	private JTextField cdTfCode;
 	private JLabel cdHeaderHeading;
+	
+	// Course card
+	private JList<Object> courseList;
+	private JLabel ccHeaderHeading;
+	private JComboBox<Object> ccCbDepartments;
+	private JTextField ccTfCode;
+	private JTextField ccTfName;
+
 	/**
 	 * Launch the application.
 	 */
@@ -236,9 +244,132 @@ public class MainFrame extends JFrame {
 		});
 		cdBody.add(cdBtnCreate);
 		//// cardDepartment - End ////
+
+		//// cardCourse - Start ////
+        JPanel cardCourse = new JPanel();
+        cardCourse.setBackground(Color.WHITE);
+        cardCourse.setBorder(emptyBorder);
+        GridBagLayout cardCourseGbLayout = new GridBagLayout();
+        cardCourseGbLayout.columnWidths = new int[] {getWidth()};
+        cardCourseGbLayout.rowHeights = new int[] {100, 150, 200};
+        cardCourseGbLayout.columnWeights = new double[]{1.0};
+        cardCourseGbLayout.rowWeights = new double[]{0.0, 0.0, 1.0};
+        cardCourse.setLayout(cardCourseGbLayout);
+        
+        JPanel ccHeader = new JPanel();
+        ccHeader.setBackground(Color.WHITE);
+        GridBagConstraints gbc_ccHeader = new GridBagConstraints();
+        gbc_ccHeader.fill = GridBagConstraints.BOTH;
+        gbc_ccHeader.gridx = 0;
+        gbc_ccHeader.gridy = 0;
+        cardCourse.add(ccHeader, gbc_ccHeader);
+        ccHeader.setLayout(new BorderLayout(0, 0));
+        
+        ccHeaderHeading = new JLabel("Kurs oversikt");
+        ccHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        ccHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        ccHeaderHeading.setBackground(Color.WHITE);
+        ccHeader.add(ccHeaderHeading, BorderLayout.CENTER);
+        
+        JPanel ccBody = new JPanel();
+        ccBody.setBorder(new EmptyBorder(0, 100, 25, 100));
+        ccBody.setBackground(Color.WHITE);
+        GridBagConstraints gbc_ccBody = new GridBagConstraints();
+        gbc_ccBody.fill = GridBagConstraints.BOTH;
+        gbc_ccBody.gridx = 0;
+        gbc_ccBody.gridy = 1;
+        cardCourse.add(ccBody, gbc_ccBody);
+        ccBody.setLayout(new GridLayout(3, 3, 50, 15));
+        
+        JLabel lblAvdeling = new JLabel("Avdeling");
+        ccBody.add(lblAvdeling);
+        
+        JLabel lblKode = new JLabel("Kode");
+        ccBody.add(lblKode);
+        
+        JLabel lblNavn = new JLabel("Navn");
+        ccBody.add(lblNavn);
+        
+        JButton ccBtnCreate = new JButton("Opprett");
+        ccBtnCreate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+				// Check that the user filled out fields before trying to create course
+				if (ccTfCode.getText().length() != 0 && ccTfName.getText().length() != 0 && ccCbDepartments.getSelectedIndex() != -1) {
+					// Check if the department exists before trying to create it
+					if (Course.exist(ccTfCode.getText())) {
+						error("Avdeling " + ccTfCode.getText() + " - " + ccTfName.getText() + " finnes allerede");
+						return;
+					}
+					
+					// Everything is ok, create the course
+					new Course(ccTfName.getText(), ccTfCode.getText(), (Department) ccCbDepartments.getSelectedItem());
+					ccTfName.setText("");
+					ccTfCode.setText("");
+					updateLists();
+				} else {
+					error("Du m\u00E5 velge en avdeling og fylle ut kode og navn for \u00E5 opprette et kurs");
+					return;
+				}
+            }
+        });
+        
+        ccCbDepartments = new JComboBox<Object>();
+        ccCbDepartments.setPrototypeDisplayValue("Lorem ipsum dolor");
+        
+        ccBody.add(ccCbDepartments);
+        
+        ccTfCode = new JTextField();
+        ccBody.add(ccTfCode);
+        ccTfCode.setColumns(10);
+        
+        ccTfName = new JTextField();
+        ccBody.add(ccTfName);
+        ccTfName.setColumns(10);
+        
+        JPanel panel_2 = new JPanel();
+        panel_2.setBackground(Color.WHITE);
+        ccBody.add(panel_2);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(Color.WHITE);
+        ccBody.add(panel_1);
+        ccBody.add(ccBtnCreate);
+        panel_2.setBackground(Color.WHITE);
+        ccCbDepartments.setPrototypeDisplayValue("Lorem ipsum dolor");
+        panel_1.setBackground(Color.WHITE);
+        
+        JPanel ccFooter = new JPanel();
+        ccFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
+        ccFooter.setBackground(colorGrayLight);
+        GridBagConstraints gbc_ccFooter = new GridBagConstraints();
+        gbc_ccFooter.fill = GridBagConstraints.BOTH;
+        gbc_ccFooter.gridx = 0;
+        gbc_ccFooter.gridy = 2;
+        cardCourse.add(ccFooter, gbc_ccFooter);
+        ccFooter.setLayout(new BorderLayout(0, 0));
+        
+        courseList = new JList<Object>();
+        courseList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        courseList.setBackground(colorGrayLight);
+        courseList.setFixedCellHeight(fontListLineHeight);
+        
+        JScrollPane ccFooterScrollPane = new JScrollPane();
+        ccFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        ccFooterScrollPane.setBorder(emptyBorder);
+        ccFooter.add(ccFooterScrollPane, BorderLayout.CENTER);
+        ccFooterScrollPane.setViewportView(courseList);
+		//// cardCourse - End ////
 	public void updateLists() {
 		// for departments card
 		departmentList.setListData(Department.toStrings());
+		
+		// for course card
+		courseList.setListData(Course.toStrings());
+		ccCbDepartments.removeAllItems();
+		for (int i = 0; i < Department.getDepartments().size(); i++) {			
+			ccCbDepartments.addItem(Department.getDepartments().get(i));
+		}
+	
 	}
 	}
 }
