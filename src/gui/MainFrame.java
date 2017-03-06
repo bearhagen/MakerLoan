@@ -16,6 +16,16 @@ public class MainFrame extends JFrame {
 	private JTextField ccTfCode;
 	private JTextField ccTfName;
 
+	// Person card
+	private JList<Object> personList;
+	private JComboBox<Object> cpCbDepartments;
+	private JComboBox<String> cpCbTypes;
+	private JTextField cpTfName;
+	private JTextField cpTfSurName;
+	private JTextField cpTfPhone;
+	
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -359,6 +369,192 @@ public class MainFrame extends JFrame {
         ccFooter.add(ccFooterScrollPane, BorderLayout.CENTER);
         ccFooterScrollPane.setViewportView(courseList);
 		//// cardCourse - End ////
+		
+		//// cardPerson - Start ////
+        JPanel cardPerson = new JPanel();
+        cardPerson.setBackground(Color.WHITE);
+        cardPerson.setBorder(emptyBorder);
+        GridBagLayout gbl_cardPerson = new GridBagLayout();
+        gbl_cardPerson.columnWidths = new int[] {732};
+        gbl_cardPerson.rowHeights = new int[] {100, 150, 150};
+        gbl_cardPerson.columnWeights = new double[]{1.0};
+        gbl_cardPerson.rowWeights = new double[]{0.0, 0.0, 1.0};
+        cardPerson.setLayout(gbl_cardPerson);
+        
+        JPanel cpHeader = new JPanel();
+        cpHeader.setBackground(Color.WHITE);
+        GridBagConstraints gbc_cpHeader = new GridBagConstraints();
+        gbc_cpHeader.fill = GridBagConstraints.BOTH;
+        gbc_cpHeader.gridx = 0;
+        gbc_cpHeader.gridy = 0;
+        cardPerson.add(cpHeader, gbc_cpHeader);
+        cpHeader.setLayout(new BorderLayout(0, 0));
+        
+        JLabel cpHeaderHeading = new JLabel("Person oversikt");
+        cpHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        cpHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        cpHeaderHeading.setBackground(Color.WHITE);
+        cpHeader.add(cpHeaderHeading, BorderLayout.CENTER);
+        
+        JPanel cpBody = new JPanel();
+        cpBody.setBorder(new EmptyBorder(0, 100, 25, 100));
+        cpBody.setBackground(Color.WHITE);
+        GridBagConstraints gbc_cpBody = new GridBagConstraints();
+        gbc_cpBody.fill = GridBagConstraints.BOTH;
+        gbc_cpBody.gridx = 0;
+        gbc_cpBody.gridy = 1;
+        cardPerson.add(cpBody, gbc_cpBody);
+        cpBody.setLayout(new GridLayout(5, 3, 50, 15));
+        
+        JButton cpBtnCreate = new JButton("Videre");
+        cpBtnCreate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                // Check that the user filled out fields before trying to create person
+                if (cpTfName.getText().length() != 0 && cpTfSurName.getText().length() != 0 && cpTfPhone.getText().length() != 0 && cpCbDepartments.getSelectedIndex() != -1) {
+                	// Check if the department exists before trying to create it
+                    if (Person.exist(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText())) {
+                        error(cpTfName.getText() + " " + cpTfSurName.getText() + " finnes allerede i systemet");
+                        return;
+                    }
+                    
+                    Department selectedDepartment = (Department) cpCbDepartments.getSelectedItem();
+                    
+                    if (cpCbTypes.getSelectedItem().equals("Student")) {
+                    	// Hide back button and show course select card
+                    	btnTilbake.setVisible(false);
+    					CardLayout cardLayout = (CardLayout) cards.getLayout();
+    					cardLayout.show(cards, "cardCourseSelect");
+    					
+    					// for course select card
+    					courseSelectList.setListData(Course.toStrings(selectedDepartment.getCode()));    					
+    					
+    					// Done with course selection
+    					ccsBtnDone.addActionListener(new ActionListener() {
+    						public void actionPerformed(ActionEvent e) {
+    							new Student(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment, new ArrayList(courseSelectList.getSelectedValuesList()), null);
+
+    							cpTfName.setText("");
+    	                        cpTfSurName.setText("");
+    	                        cpTfPhone.setText("");
+    							
+    							// Show back button and go back to person card
+    	                        btnTilbake.setVisible(true);
+    	                        CardLayout cardLayout = (CardLayout) cards.getLayout();
+    	    					cardLayout.show(cards, "cardPersoner");
+    	    					updateLists();
+    						}
+    					});
+    					
+    					// Abort course selection
+    					btnAvbryt.addActionListener(new ActionListener() {
+    						public void actionPerformed(ActionEvent e) {
+    							btnTilbake.setVisible(true);
+    	    					CardLayout cardLayout = (CardLayout) cards.getLayout();
+    	    					cardLayout.show(cards, "cardPersoner");
+    						}
+    					});
+    					
+    					
+					} else if (cpCbTypes.getSelectedItem().equals("Admin ansatt")) {
+						new AdminEmployee(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment);
+						
+						cpTfName.setText("");
+                        cpTfSurName.setText("");
+                        cpTfPhone.setText("");
+						
+						updateLists();
+					} else if (cpCbTypes.getSelectedItem().equals("Akademisk ansatt")) {
+						new AcademicEmployee(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment);
+						
+						cpTfName.setText("");
+                        cpTfSurName.setText("");
+                        cpTfPhone.setText("");
+                        
+						updateLists();
+					}
+                } else {
+                    error("Du m\u00E5 velge en avdeling og type og fylle ut alle feltene for \u00E5 opprette en person");
+                    return;
+                }
+            }
+        });
+        
+        JLabel lblFornavn = new JLabel("Fornavn");
+        cpBody.add(lblFornavn);
+        
+        JLabel lblEtternavn = new JLabel("Etternavn");
+        cpBody.add(lblEtternavn);
+        
+        JLabel lblMobil = new JLabel("Mobil");
+        cpBody.add(lblMobil);
+        
+        cpTfName = new JTextField();
+        cpBody.add(cpTfName);
+        cpTfName.setColumns(10);
+        
+        cpTfSurName = new JTextField();
+        cpBody.add(cpTfSurName);
+        cpTfSurName.setColumns(10);
+        
+        cpTfPhone = new JTextField();
+        cpBody.add(cpTfPhone);
+        cpTfPhone.setColumns(10);
+        
+        JLabel lblAvdeling_1 = new JLabel("Avdeling & type");
+        lblAvdeling_1.setHorizontalAlignment(SwingConstants.RIGHT);
+        cpBody.add(lblAvdeling_1);
+        
+        cpCbDepartments = new JComboBox();
+        cpBody.add(cpCbDepartments);
+        
+        cpCbTypes = new JComboBox<String>();
+        cpCbTypes.setPrototypeDisplayValue("Lorem ipsum dolor");            
+        cpCbTypes.addItem("Student");
+        cpCbTypes.addItem("Admin ansatt");
+        cpCbTypes.addItem("Akademisk ansatt");
+        
+        cpCbTypes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cpCbTypes.getSelectedItem().equals("Student")) {
+					cpBtnCreate.setText("Videre");
+				} else {
+					cpBtnCreate.setText("Opprett");
+				}
+			}
+		});
+        
+        cpBody.add(cpCbTypes);
+        
+        JPanel panel_3 = new JPanel();
+        panel_3.setBackground(Color.WHITE);
+        cpBody.add(panel_3);
+        
+        JPanel panel_4 = new JPanel();
+        panel_4.setBackground(Color.WHITE);
+        cpBody.add(panel_4);
+        cpBody.add(cpBtnCreate);
+        
+        JPanel cpFooter = new JPanel();
+        cpFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
+        cpFooter.setBackground(colorGrayLight);
+        GridBagConstraints gbc_cpFooter = new GridBagConstraints();
+        gbc_cpFooter.fill = GridBagConstraints.BOTH;
+        gbc_cpFooter.gridx = 0;
+        gbc_cpFooter.gridy = 2;
+        cardPerson.add(cpFooter, gbc_cpFooter);
+        cpFooter.setLayout(new BorderLayout(0, 0));
+        
+        personList = new JList<Object>();
+        personList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        personList.setBackground(colorGrayLight);
+        personList.setFixedCellHeight(fontListLineHeight);
+        
+        JScrollPane cpFooterScrollPane = new JScrollPane();
+        cpFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, colorGrayLight));
+        cpFooterScrollPane.setBorder(emptyBorder);
+        cpFooter.add(cpFooterScrollPane, BorderLayout.CENTER);
+        cpFooterScrollPane.setViewportView(personList);
+		//// cardPerson - End ////
 	public void updateLists() {
 		// for departments card
 		departmentList.setListData(Department.toStrings());
@@ -370,6 +566,9 @@ public class MainFrame extends JFrame {
 			ccCbDepartments.addItem(Department.getDepartments().get(i));
 		}
 	
+		// for person card
+		cpCbDepartments.setModel(ccCbDepartments.getModel());
+		personList.setListData(Person.toStrings());
 	}
 	
 	public void error(String errorMessage) {
