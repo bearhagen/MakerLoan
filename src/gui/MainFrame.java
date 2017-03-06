@@ -212,7 +212,8 @@ public class MainFrame extends JFrame {
 		cmBody.setLayout(new GridLayout(1, 3, 50, 25));
 		
 		// mainCard buttons
-		String[] buttons = {/*"L�n",*/ "Personer", "Kurs", "Avdelinger"}		for (int i = 0; i < buttons.length; i++) {
+		String[] buttons = {/*"L\u00E5n",*/ "Personer", "Kurs", "Avdelinger"};
+		for (int i = 0; i < buttons.length; i++) {
 			String btnText = buttons[i];
 
 			JButton btnTmp = new JButton(buttons[i]);
