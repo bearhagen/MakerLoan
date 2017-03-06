@@ -8,7 +8,7 @@ public class Item {
 	private int amount;
 	private static ArrayList<Item> items = new ArrayList<Item>();
 	
-	public Item(String name, int amount, int itemID) {
+	public Item(String name, int itemID) {
 		this.name = name;
 		this.amount = amount;
 		this.itemID = itemID;
