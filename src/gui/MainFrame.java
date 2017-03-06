@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -161,7 +160,7 @@ public class MainFrame extends JFrame {
 		    }
 		});
 		
-//		So the absolute positioned cards panel will resize on window maximize
+		// So the absolute positioned cards panel will resize on window maximize
 		addWindowStateListener(new WindowStateListener() {
 			@Override
 			public void windowStateChanged(WindowEvent e) {
@@ -323,6 +322,8 @@ public class MainFrame extends JFrame {
         departmentList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         departmentList.setBackground(Colors.GRAY_LIGHT);
         departmentList.setFixedCellHeight(fontListLineHeight);
+        departmentList.setSelectionForeground(Colors.WHITE);
+        departmentList.setSelectionBackground(Colors.INFO);
         
         JScrollPane cdFooterScrollPane = new JScrollPane();
         cdFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, (Color) new Color(236, 234, 229)));
@@ -441,6 +442,8 @@ public class MainFrame extends JFrame {
         courseList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         courseList.setBackground(Colors.GRAY_LIGHT);
         courseList.setFixedCellHeight(fontListLineHeight);
+        courseList.setSelectionForeground(Colors.WHITE);
+        courseList.setSelectionBackground(Colors.INFO);
         
         JScrollPane ccFooterScrollPane = new JScrollPane();
         ccFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, Colors.GRAY_LIGHT));
@@ -630,6 +633,8 @@ public class MainFrame extends JFrame {
         personList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         personList.setBackground(Colors.GRAY_LIGHT);
         personList.setFixedCellHeight(fontListLineHeight);
+        personList.setSelectionForeground(Colors.WHITE);
+        personList.setSelectionBackground(Colors.INFO);
         
         JScrollPane cpFooterScrollPane = new JScrollPane();
         cpFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, Colors.GRAY_LIGHT));
@@ -697,6 +702,8 @@ public class MainFrame extends JFrame {
         courseSelectList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         courseSelectList.setBackground(Colors.GRAY_LIGHT);
         courseSelectList.setFixedCellHeight(fontListLineHeight);
+        courseSelectList.setSelectionForeground(Colors.WHITE);
+        courseSelectList.setSelectionBackground(Colors.INFO);
         
         JScrollPane ccsFooterScrollPane = new JScrollPane();
         ccsBody.add(ccsFooterScrollPane);
@@ -712,17 +719,17 @@ public class MainFrame extends JFrame {
 		gbc_ccsFooter.gridx = 0;
 		gbc_ccsFooter.gridy = 3;
 		cardCourseSelect.add(ccsFooter, gbc_ccsFooter);
-		ccsFooter.setLayout(new BorderLayout(0, 0));
+		ccsFooter.setLayout(new GridLayout(1, 3, 50, 0));
 		
-		ccsBtnDone.setBackground(Colors.SUCCESS);
-		ccsFooter.add(ccsBtnDone, BorderLayout.EAST);
+		ccsBtnCancel.setBackground(Colors.ALERT);
+		ccsFooter.add(ccsBtnCancel);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Colors.WHITE);
 		ccsFooter.add(panel_6);
 		
-		ccsBtnCancel.setBackground(Colors.ALERT);
-		ccsFooter.add(ccsBtnCancel, BorderLayout.WEST);
+		ccsBtnDone.setBackground(Colors.SUCCESS);
+		ccsFooter.add(ccsBtnDone);
 		
 		// Add card
 		cards.add(cardCourseSelect, "cardCourseSelect");
