@@ -2,6 +2,12 @@ package gui;
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	
+	// Department card
+	private JList<Object> departmentList;
+	private JTextField cdTfName;
+	private JTextField cdTfCode;
+	private JLabel cdHeaderHeading;
 	/**
 	 * Launch the application.
 	 */
