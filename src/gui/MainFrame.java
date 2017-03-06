@@ -41,6 +41,13 @@ public class MainFrame extends JFrame {
 		Color colorInfo        = colorBlue;
 		Color colorAlert       = colorRed;
 		
+		int fontListLineHeight = 40;
+		int fontRegularSize    = 15;
+		int fontHeadingsSize   = 24;
+		Font fontHeadings      = new Font("Segoe UI", Font.PLAIN, fontHeadingsSize);
+		Font fontRegular       = new Font("Segoe UI", Font.PLAIN, fontRegularSize);
+		Font fontRegularBold   = new Font("Segoe UI Black", Font.PLAIN, fontRegularSize);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
