@@ -272,6 +272,9 @@ public class MainFrame extends JFrame {
 		c1FooterImage.setBackground(Color.WHITE);
 		c1FooterImage.setIcon(new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\m\u00F8nster-gr\u00E5.png"));
 		cmFooter.add(c1FooterImage);
+		
+		// Add card
+     	cards.add(cardMain, "cardMain");
 		//// cardMain - End ////
 		
 		//// cardDepartment - Start ////
@@ -374,6 +377,9 @@ public class MainFrame extends JFrame {
         cdFooterScrollPane.setBorder(emptyBorder);
         cdFooter.add(cdFooterScrollPane, BorderLayout.CENTER);
         cdFooterScrollPane.setViewportView(departmentList);
+        
+        // Add card
+     	cards.add(cardDepartment, "cardAvdelinger");
 		//// cardDepartment - End ////
 
 		//// cardCourse - Start ////
@@ -489,6 +495,9 @@ public class MainFrame extends JFrame {
         ccFooterScrollPane.setBorder(emptyBorder);
         ccFooter.add(ccFooterScrollPane, BorderLayout.CENTER);
         ccFooterScrollPane.setViewportView(courseList);
+        
+        // Add card
+     	cards.add(cardCourse, "cardKurs");
 		//// cardCourse - End ////
 		
 		//// cardPerson - Start ////
@@ -675,6 +684,9 @@ public class MainFrame extends JFrame {
         cpFooterScrollPane.setBorder(emptyBorder);
         cpFooter.add(cpFooterScrollPane, BorderLayout.CENTER);
         cpFooterScrollPane.setViewportView(personList);
+        
+		// Add card
+		cards.add(cardPerson, "cardPersoner");
 		//// cardPerson - End ////
         
 		//// cardCourseSelect - Start ////
@@ -761,6 +773,9 @@ public class MainFrame extends JFrame {
 		btnAvbryt.setForeground(colorWhite);
 		btnAvbryt.setBackground(colorAlert);
 		ccsFooter.add(btnAvbryt, BorderLayout.WEST);
+		
+		// Add card
+		cards.add(cardCourseSelect, "cardCourseSelect");
 		//// cardCourseSelect - End ////
 	public void updateLists() {
 		// for departments card
