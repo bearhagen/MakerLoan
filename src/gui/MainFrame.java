@@ -289,15 +289,15 @@ public class MainFrame extends JFrame {
 		cdBtnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Check that the user filled out fields before trying to create department
-				if (cdTfCode.getText().length() != 0 && cdTfName.getText().length() != 0) {
+				if (cdTfCode.getText().trim().length() != 0 && cdTfName.getText().trim().length() != 0) {
 					// Check if the department exists before trying to create it
-					if (Department.exist(cdTfCode.getText())) {
-						error("Avdeling " + cdTfCode.getText() + " - " + cdTfName.getText() + " finnes allerede");
+					if (Department.exist(cdTfCode.getText().trim())) {
+						error("Avdeling " + cdTfCode.getText().trim() + " - " + cdTfName.getText().trim() + " finnes allerede");
 						return;
 					}
 					
 					// Everything is ok, create the department
-					new Department(cdTfName.getText(), cdTfCode.getText());
+					new Department(cdTfName.getText().trim(), cdTfCode.getText().trim());
 					cdTfName.setText("");
 					cdTfCode.setText("");
 					updateLists();
@@ -383,15 +383,15 @@ public class MainFrame extends JFrame {
         ccBtnCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 				// Check that the user filled out fields before trying to create course
-				if (ccTfCode.getText().length() != 0 && ccTfName.getText().length() != 0 && ccCbDepartments.getSelectedIndex() != -1) {
+				if (ccTfCode.getText().trim().length() != 0 && ccTfName.getText().trim().length() != 0 && ccCbDepartments.getSelectedIndex() != -1) {
 					// Check if the department exists before trying to create it
-					if (Course.exist(ccTfCode.getText())) {
-						error("Avdeling " + ccTfCode.getText() + " - " + ccTfName.getText() + " finnes allerede");
+					if (Course.exist(ccTfCode.getText().trim())) {
+						error("Avdeling " + ccTfCode.getText().trim() + " - " + ccTfName.getText().trim() + " finnes allerede");
 						return;
 					}
 					
 					// Everything is ok, create the course
-					new Course(ccTfName.getText(), ccTfCode.getText(), (Department) ccCbDepartments.getSelectedItem());
+					new Course(ccTfName.getText().trim(), ccTfCode.getText().trim(), (Department) ccCbDepartments.getSelectedItem());
 					ccTfName.setText("");
 					ccTfCode.setText("");
 					updateLists();
@@ -492,10 +492,10 @@ public class MainFrame extends JFrame {
         cpBtnCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 // Check that the user filled out fields before trying to create person
-                if (cpTfName.getText().length() != 0 && cpTfSurName.getText().length() != 0 && cpTfPhone.getText().length() != 0 && cpCbDepartments.getSelectedIndex() != -1) {
+                if (cpTfName.getText().trim().length() != 0 && cpTfSurName.getText().trim().length() != 0 && cpTfPhone.getText().trim().length() != 0 && cpCbDepartments.getSelectedIndex() != -1) {
                 	// Check if the department exists before trying to create it
-                    if (Person.exist(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText())) {
-                        error(cpTfName.getText() + " " + cpTfSurName.getText() + " finnes allerede i systemet");
+                    if (Person.exist(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim())) {
+                        error(cpTfName.getText().trim() + " " + cpTfSurName.getText().trim() + " finnes allerede i systemet");
                         return;
                     }
                     
@@ -508,12 +508,12 @@ public class MainFrame extends JFrame {
     					cardLayout.show(cards, "cardCourseSelect");
     					
     					// for course select card
-    					courseSelectList.setListData(Course.toStrings(selectedDepartment.getCode()));    					
+    					courseSelectList.setListData(Course.toStrings(selectedDepartment));    					
     					
     					// Done with course selection
     					ccsBtnDone.addActionListener(new ActionListener() {
     						public void actionPerformed(ActionEvent e) {
-    							new Student(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment, new ArrayList(courseSelectList.getSelectedValuesList()), null);
+    							new Student(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim(), selectedDepartment, new ArrayList(courseSelectList.getSelectedValuesList()), null);
 
     							cpTfName.setText("");
     	                        cpTfSurName.setText("");
@@ -538,7 +538,7 @@ public class MainFrame extends JFrame {
     					
     					
 					} else if (cpCbTypes.getSelectedItem().equals("Admin ansatt")) {
-						new AdminEmployee(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment);
+						new AdminEmployee(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim(), selectedDepartment);
 						
 						cpTfName.setText("");
                         cpTfSurName.setText("");
@@ -546,7 +546,7 @@ public class MainFrame extends JFrame {
 						
 						updateLists();
 					} else if (cpCbTypes.getSelectedItem().equals("Akademisk ansatt")) {
-						new AcademicEmployee(cpTfName.getText(), cpTfSurName.getText(), cpTfPhone.getText(), selectedDepartment);
+						new AcademicEmployee(cpTfName.getText().trim(), cpTfSurName.getText().trim(), cpTfPhone.getText().trim(), selectedDepartment);
 						
 						cpTfName.setText("");
                         cpTfSurName.setText("");
