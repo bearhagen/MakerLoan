@@ -248,6 +248,7 @@ public class MainFrame extends JFrame {
 					cdTfCode.setText("");
 					updateLists();
 				} else {
+					error("Du m\u00E5 fylle ut kode og navn for \u00E5 opprette en avdeling");
 					return;
 				}
 			}
