@@ -108,7 +108,7 @@ public class MainFrame extends JFrame {
 		Font fontRegular       = new Font("Segoe UI", Font.PLAIN, fontRegularSize);
 		Font fontRegularBold   = new Font("Segoe UI BLACK", Font.PLAIN, fontRegularSize);
 		
-		ImageIcon appIcon      = new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\emblem-512.png");
+		ImageIcon appIcon      = new ImageIcon(getClass().getClassLoader().getResource("resources/hiof-branding/emblem-512.png"));
 		
 		Border emptyBorder     = BorderFactory.createEmptyBorder();
 		
@@ -228,7 +228,7 @@ public class MainFrame extends JFrame {
 		JLabel c1FooterImage = new JLabel("");
 		c1FooterImage.setVerticalAlignment(SwingConstants.BOTTOM);
 		c1FooterImage.setBackground(Colors.WHITE);
-		c1FooterImage.setIcon(new ImageIcon("C:\\Users\\bjorn\\Dropbox (Personal)\\Personal\\Education\\Hi\u00D8\\hiof-branding\\m\u00F8nster-gr\u00E5.png"));
+		c1FooterImage.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/hiof-branding/monster-gra.png")));
 		cmFooter.add(c1FooterImage);
 		
 		// Add card
