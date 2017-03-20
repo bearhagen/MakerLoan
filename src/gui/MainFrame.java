@@ -17,8 +17,15 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.lang.reflect.Array;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -29,14 +36,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ListDataListener;
 import javax.swing.plaf.ColorUIResource;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import net.miginfocom.swing.MigLayout;
 
 import gui.Button;
@@ -49,11 +64,28 @@ import hr.AcademicEmployee;
 import hr.AdminEmployee;
 import hr.Person;
 import hr.Student;
+import inventory.Item;
+import inventory.Loan;
+import javax.swing.JButton;
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+
+	// Loan card
+	private JList<Object> loanList;
+	private JTextField clTfDate;
+	private JLabel clHeaderHeading;
+	private JComboBox<Item> clCbItem;
+	private JComboBox<Person> clCbPerson;
+	private JComboBox<String> clCbSort;
 	
+	// Item card
+	private JList<Object> itemList;
+	private JTextField ciTfName;
+	private JTextField ciTfCode;
+	private JLabel ciHeaderHeading;
+
 	// Department card
 	private JList<Object> departmentList;
 	private JTextField cdTfName;
@@ -178,7 +210,7 @@ public class MainFrame extends JFrame {
 		//// cardMain - Start ////
 		JPanel cardMain = new JPanel();
 		cardMain.setBackground(Colors.WHITE);
-		cardMain.setLayout(new MigLayout("insets 0", "[::100%,grow,center]", "[75px:n,grow 20][150px:n,grow 40][100px:n,grow 40]"));
+		cardMain.setLayout(new MigLayout("insets 0", "[::100%,grow,center]", "[75px:n,grow 20][200px:n,grow 40][100px:n,grow 40]"));
 		
 		JPanel cmHeader = new JPanel();
 		cardMain.add(cmHeader, "cell 0 0,grow");
@@ -193,14 +225,12 @@ public class MainFrame extends JFrame {
 		
 		JPanel cmBody = new JPanel();
 		cardMain.add(cmBody, "cell 0 1,grow");
-//		cmBody.setBorder(new EmptyBorder(25, 100, 100, 100)); // BORDER FOR WHEN LOAN IS ADDED
-		cmBody.setBorder(new EmptyBorder(50, 100, 50, 100));
+		cmBody.setBorder(new EmptyBorder(35, 100, 35, 100));
 		cmBody.setBackground(Colors.WHITE);
-//		cmBody.setLayout(new GridLayout(2, 2, 50, 25)); // LAYOUT FOR WHEN LOAN IS ADDED
-		cmBody.setLayout(new GridLayout(1, 3, 50, 25));
+		cmBody.setLayout(new GridLayout(2, 3, 50, 25));
 		
 		// mainCard buttons
-		String[] buttons = {/*"L\u00E5n",*/ "Personer", "Kurs", "Avdelinger"};
+		String[] buttons = {"L\u00E5n", "Artikler", "Personer", "Kurs", "Avdelinger"};
 		for (int i = 0; i < buttons.length; i++) {
 			String btnText = buttons[i];
 			Button btnTmp = new Button(buttons[i]);
@@ -234,6 +264,284 @@ public class MainFrame extends JFrame {
 		// Add card
      	cards.add(cardMain, "cardMain");
 		//// cardMain - End ////
+     	
+        JPanel cardLoan = new JPanel();
+        cardLoan.setBackground(Colors.WHITE);
+        cardLoan.setBorder(emptyBorder);
+        GridBagLayout cardLoansGbLayout = new GridBagLayout();
+        cardLoansGbLayout.columnWidths = new int[] {getWidth()};
+        cardLoansGbLayout.rowHeights = new int[] {100, 150, 200};
+        cardLoansGbLayout.columnWeights = new double[]{1.0};
+        cardLoansGbLayout.rowWeights = new double[]{0.0, 0.0, 1.0};
+        cardLoan.setLayout(cardLoansGbLayout);
+        
+        JPanel clHeader = new JPanel();
+        clHeader.setBackground(Colors.WHITE);
+        GridBagConstraints gbc_clHeader = new GridBagConstraints();
+        gbc_clHeader.fill = GridBagConstraints.BOTH;
+        gbc_clHeader.insets = insets;
+        gbc_clHeader.gridx = 0;
+        gbc_clHeader.gridy = 0;
+        cardLoan.add(clHeader, gbc_clHeader);
+        clHeader.setLayout(new BorderLayout(0, 0));
+        
+        clHeaderHeading = new JLabel("Lån oversikt");
+        clHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        clHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        clHeaderHeading.setBackground(Colors.WHITE);
+        clHeader.add(clHeaderHeading, BorderLayout.CENTER);
+        
+        JPanel clBody = new JPanel();
+        clBody.setBorder(new EmptyBorder(0, 100, 25, 100));
+        clBody.setBackground(Colors.WHITE);
+        GridBagConstraints gbc_clBody = new GridBagConstraints();
+        gbc_clBody.fill = GridBagConstraints.BOTH;
+        gbc_clBody.insets = insets;
+        gbc_clBody.gridx = 0;
+        gbc_clBody.gridy = 1;
+        cardLoan.add(clBody, gbc_clBody);
+        clBody.setLayout(new GridLayout(0, 3, 50, 15));
+        
+        JLabel lblPerson_1 = new JLabel("Person");
+        clBody.add(lblPerson_1);
+        
+        JLabel lblTing = new JLabel("Artikel");
+        clBody.add(lblTing);
+        
+        JLabel lblPerson = new JLabel("Dato (yyyy-mm-dd)");
+        lblPerson.setToolTipText("");
+        clBody.add(lblPerson);
+        
+        clCbPerson = new JComboBox();
+        clBody.add(clCbPerson);
+        
+        clCbItem = new JComboBox();
+        clBody.add(clCbItem);
+        
+        clTfDate = new JTextField();
+        clBody.add(clTfDate);
+        clTfDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(new GregorianCalendar().getTime()));
+        clTfDate.setColumns(10);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(Colors.WHITE);
+        clBody.add(panel);
+        
+        Button clBtnCreate = new Button("Opprett");
+        clBtnCreate.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent arg0) {
+            // Check that the user filled out fields before trying to create loan
+            if (clCbPerson.getSelectedIndex() != -1 && clCbItem.getSelectedIndex() != -1 && clTfDate.getText().trim().length() != 0) {
+              GregorianCalendar date = new GregorianCalendar();
+              try {
+				date.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(clTfDate.getText().trim()));
+			} catch (ParseException e) {
+				error("Noe gikk feil n\u00E5r vi pr\u00f8vde \u00E5 lese datoen. Har du skrevet inn på riktig format? (\u00E5r-m\u00E5ned-dag)");
+			}
+            	
+              // Everything is ok, create the loan
+              new Loan((Person) clCbPerson.getSelectedItem(), (Item) clCbItem.getSelectedItem(), date);
+              updateLists();
+            } else {
+              error("Du m\u00E5 fylle ut kode og navn for \u00E5 opprette et l\u00E5n");
+              return;
+            }
+          }
+        });
+        
+        JPanel panel_5 = new JPanel();
+        panel_5.setBackground(Color.WHITE);
+        clBody.add(panel_5);
+        clBody.add(clBtnCreate);
+        
+        JPanel clFooter = new JPanel();
+        clFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
+        clFooter.setBackground(Colors.GRAY_LIGHT);
+        GridBagConstraints gbc_clFooter = new GridBagConstraints();
+        gbc_clFooter.fill = GridBagConstraints.BOTH;
+        gbc_clFooter.gridx = 0;
+        gbc_clFooter.gridy = 2;
+        cardLoan.add(clFooter, gbc_clFooter);
+        GridBagLayout gbl_clFooter = new GridBagLayout();
+        gbl_clFooter.columnWidths = new int[] {75, 25};
+        gbl_clFooter.rowHeights = new int[] {10, 90};
+        gbl_clFooter.columnWeights = new double[]{1.0, 0.0};
+        gbl_clFooter.rowWeights = new double[]{0.0, 1.0};
+        clFooter.setLayout(gbl_clFooter);
+        
+        clCbSort = new JComboBox<>();
+        GridBagConstraints gbc_clCbSort = new GridBagConstraints();
+        gbc_clCbSort.anchor = GridBagConstraints.NORTH;
+        gbc_clCbSort.fill = GridBagConstraints.HORIZONTAL;
+        gbc_clCbSort.gridx = 0;
+        gbc_clCbSort.gridy = 0;
+        clFooter.add(clCbSort, gbc_clCbSort);
+        clCbSort.addItem("Dato - Nyeste først");
+        clCbSort.addItem("Dato - Eldste først");
+        clCbSort.addItem("Etternavn A - Å");
+        clCbSort.addItem("Etternavn Å - A");
+        clCbSort.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		updateLists();
+        	}
+        });
+        
+        loanList = new JList<Object>();
+        loanList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        loanList.setBackground(Colors.GRAY_LIGHT);
+        loanList.setFixedCellHeight(fontListLineHeight);
+        loanList.setSelectionForeground(Colors.WHITE);
+        loanList.setSelectionBackground(Colors.INFO);
+        
+        Button clBtnDelete = new Button("Slett valgt l\u00E5n");
+        GridBagConstraints gbc_clBtnDelete = new GridBagConstraints();
+        gbc_clBtnDelete.ipadx = 15;
+        gbc_clBtnDelete.fill = GridBagConstraints.BOTH;
+        gbc_clBtnDelete.gridx = 1;
+        gbc_clBtnDelete.gridy = 0;
+        clBtnDelete.setBackground(Colors.ALERT);
+        clFooter.add(clBtnDelete, gbc_clBtnDelete);
+        clBtnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+	        	int[] selected = loanList.getSelectedIndices();
+
+				for (int i = 0; i < selected.length; i++) {
+					Loan.getLoans().remove(selected[i]);
+				}
+				
+				updateLists();
+			}
+		});
+        
+        JScrollPane clFooterScrollPane = new JScrollPane();
+        clFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, (Color) new Color(236, 234, 229)));
+        clFooterScrollPane.setBorder(emptyBorder);
+        GridBagConstraints gbc_clFooterScrollPane = new GridBagConstraints();
+        gbc_clFooterScrollPane.gridwidth = 2;
+        gbc_clFooterScrollPane.fill = GridBagConstraints.BOTH;
+        gbc_clFooterScrollPane.gridx = 0;
+        gbc_clFooterScrollPane.gridy = 1;
+        clFooter.add(clFooterScrollPane, gbc_clFooterScrollPane);
+        clFooterScrollPane.setViewportView(loanList);
+        
+        // Add card
+        cards.add(cardLoan, "cardLån");
+        //// cardLoan - End ////
+        
+        JPanel cardItem = new JPanel();
+        cardItem.setBackground(Colors.WHITE);
+        cardItem.setBorder(emptyBorder);
+        GridBagLayout cardItemsGbLayout = new GridBagLayout();
+        cardItemsGbLayout.columnWidths = new int[] {getWidth()};
+        cardItemsGbLayout.rowHeights = new int[] {100, 150, 200};
+        cardItemsGbLayout.columnWeights = new double[]{1.0};
+        cardItemsGbLayout.rowWeights = new double[]{0.0, 0.0, 1.0};
+        cardItem.setLayout(cardItemsGbLayout);
+        
+        JPanel ciHeader = new JPanel();
+        ciHeader.setBackground(Colors.WHITE);
+        GridBagConstraints gbc_ciHeader = new GridBagConstraints();
+        gbc_ciHeader.fill = GridBagConstraints.BOTH;
+        gbc_ciHeader.insets = insets;
+        gbc_ciHeader.gridx = 0;
+        gbc_ciHeader.gridy = 0;
+        cardItem.add(ciHeader, gbc_ciHeader);
+        ciHeader.setLayout(new BorderLayout(0, 0));
+        
+        ciHeaderHeading = new JLabel("Artikler oversikt");
+        ciHeaderHeading.setHorizontalAlignment(SwingConstants.CENTER);
+        ciHeaderHeading.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        ciHeaderHeading.setBackground(Colors.WHITE);
+        ciHeader.add(ciHeaderHeading, BorderLayout.CENTER);
+        
+        JPanel ciBody = new JPanel();
+        ciBody.setBorder(new EmptyBorder(0, 100, 25, 100));
+        ciBody.setBackground(Colors.WHITE);
+        GridBagConstraints gbc_ciBody = new GridBagConstraints();
+        gbc_ciBody.fill = GridBagConstraints.BOTH;
+        gbc_ciBody.insets = insets;
+        gbc_ciBody.gridx = 0;
+        gbc_ciBody.gridy = 1;
+        cardItem.add(ciBody, gbc_ciBody);
+        ciBody.setLayout(new GridLayout(0, 2, 50, 15));
+        
+        JLabel lblCiTing = new JLabel("ID");
+        ciBody.add(lblCiTing);
+        
+        JLabel lblCiPerson = new JLabel("Navn");
+        ciBody.add(lblCiPerson);
+        
+        ciTfCode = new JTextField();
+        ciTfCode.setColumns(10);
+        ciBody.add(ciTfCode);
+        
+        ciTfName = new JTextField();
+        ciBody.add(ciTfName);
+        ciTfName.setColumns(10);
+        
+        JPanel panelCi1 = new JPanel();
+        panelCi1.setBackground(Color.WHITE);
+        panel.setBackground(Colors.WHITE);
+        ciBody.add(panelCi1);
+        
+        Button ciBtnCreate = new Button("Opprett");
+        ciBtnCreate.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent arg0) {
+            // Check that the user filled out fields before trying to create item
+            if (ciTfCode.getText().trim().length() != 0 && ciTfName.getText().trim().length() != 0) {
+            	
+            	// Check that the ID is only numbers
+            	if	(!ciTfCode.getText().matches("^[0-9]+$")) {
+            		error("En artikel sin ID må kun bestå av tall");
+            		return;
+            	}
+            	
+            	// Check if the item exists before trying to create it
+            	if (Item.exist(new Integer(ciTfCode.getText().trim()))) {
+            		error("Artikel med ID " + ciTfCode.getText().trim() + " finnes allerede");
+            		return;
+            	}
+              
+              // Everything is ok, create the item
+              new Item(ciTfName.getText().trim(), new Integer(ciTfCode.getText().trim()));
+              ciTfName.setText("");
+              ciTfCode.setText("");
+              updateLists();
+            } else {
+              error("Du m\u00E5 fylle ut kode og navn for \u00E5 opprette en artikel");
+              return;
+            }
+          }
+        });
+        ciBody.add(ciBtnCreate);
+        
+        JPanel ciFooter = new JPanel();
+        ciFooter.setBorder(new EmptyBorder(0, 0, 0, 17));
+        ciFooter.setBackground(Colors.GRAY_LIGHT);
+        GridBagConstraints gbc_ciFooter = new GridBagConstraints();
+        gbc_ciFooter.fill = GridBagConstraints.BOTH;
+        gbc_ciFooter.gridx = 0;
+        gbc_ciFooter.gridy = 2;
+        cardItem.add(ciFooter, gbc_ciFooter);
+        ciFooter.setLayout(new BorderLayout(0, 0));
+        
+        itemList = new JList<Object>();
+        itemList.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        itemList.setBackground(Colors.GRAY_LIGHT);
+        itemList.setFixedCellHeight(fontListLineHeight);
+        itemList.setSelectionForeground(Colors.WHITE);
+        itemList.setSelectionBackground(Colors.INFO);
+        
+        JScrollPane ciFooterScrollPane = new JScrollPane();
+        ciFooterScrollPane.setViewportBorder(new MatteBorder(0, 50, 0, 50, (Color) new Color(236, 234, 229)));
+        ciFooterScrollPane.setBorder(emptyBorder);
+        ciFooter.add(ciFooterScrollPane, BorderLayout.CENTER);
+        ciFooterScrollPane.setViewportView(itemList);
+        
+        // Add card
+        cards.add(cardItem, "cardArtikler");
+        //// cardItem - End ////
 		
 		//// cardDepartment - Start ////
 		JPanel cardDepartment = new JPanel();
@@ -273,11 +581,11 @@ public class MainFrame extends JFrame {
 		cardDepartment.add(cdBody, gbc_cdBody);
 		cdBody.setLayout(new GridLayout(0, 2, 50, 15));
 		
-		JLabel lblTing = new JLabel("Kode");
-		cdBody.add(lblTing);
+		JLabel lblCdKode = new JLabel("Kode");
+		cdBody.add(lblCdKode);
 		
-		JLabel lblPerson = new JLabel("Navn");
-		cdBody.add(lblPerson);
+		JLabel lblCdPerson = new JLabel("Navn");
+		cdBody.add(lblCdPerson);
 		
 		cdTfCode = new JTextField();
 		cdTfCode.setColumns(10);
@@ -287,9 +595,9 @@ public class MainFrame extends JFrame {
 		cdBody.add(cdTfName);
 		cdTfName.setColumns(10);
 		
-		JPanel panel = new JPanel();
+		JPanel panel2 = new JPanel();
 		panel.setBackground(Colors.WHITE);
-		cdBody.add(panel);
+		cdBody.add(panel2);
 		
 		Button cdBtnCreate = new Button("Opprett");
 		cdBtnCreate.addActionListener(new ActionListener() {
@@ -746,17 +1054,59 @@ public class MainFrame extends JFrame {
 	}
 
 	public void updateLists() {
-		// for departments card
+		// Loans coard
+		switch ((String) clCbSort.getSelectedItem()) {
+			case "Dato - Eldste først":
+				break;
+				
+			case "Etternavn A - Å":
+				Loan.getLoans().sort(new Comparator<Loan>() {
+				    @Override
+				    public int compare(Loan s1, Loan s2) {
+				        return s1.toString().substring(s1.toString().lastIndexOf(" ")+1).compareTo(s2.toString().substring(s2.toString().lastIndexOf(" ")+1));
+				    }
+				});
+				break;
+				
+			case "Etternavn Å - A":
+				Loan.getLoans().sort(new Comparator<Loan>() {
+				    @Override
+				    public int compare(Loan s1, Loan s2) {
+				        return s2.toString().substring(s2.toString().lastIndexOf(" ")+1).compareTo(s1.toString().substring(s1.toString().lastIndexOf(" ")+1));
+				    }
+				});
+				break;
+
+			default:
+				Collections.reverse(Loan.getLoans());
+				break;
+		}
+		loanList.setListData(Loan.getLoans().toArray());
+		
+		clCbPerson.removeAllItems();
+		for (int i = 0; i < Person.getPersons().size(); i++) {
+			clCbPerson.addItem(Person.getPersons().get(i));
+		}
+		
+		clCbItem.removeAllItems();
+		for (int i = 0; i < Item.getItems().size(); i++) {
+			clCbItem.addItem(Item.getItems().get(i));
+		}
+		
+		// Items card
+		itemList.setListData(Item.toStrings());
+
+		// Departments card
 		departmentList.setListData(Department.toStrings());
 		
-		// for course card
+		// Course card
 		courseList.setListData(Course.toStrings());
 		ccCbDepartments.removeAllItems();
 		for (int i = 0; i < Department.getDepartments().size(); i++) {			
 			ccCbDepartments.addItem(Department.getDepartments().get(i));
 		}
 	
-		// for person card
+		// Person card
 		cpCbDepartments.setModel(ccCbDepartments.getModel());
 		personList.setListData(Person.toStrings());
 	}
