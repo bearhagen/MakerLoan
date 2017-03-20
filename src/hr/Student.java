@@ -36,6 +36,7 @@ public class Student extends Person {
 		this.course = course;
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + " - " + studentID + " - " + getName() + " " + getSurName() + " - " + getPhone() + " - " + getDepartment();
 	}
