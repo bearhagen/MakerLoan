@@ -25,8 +25,16 @@ public class App {
 		
 		Student ola = new Student("Ola", "Nordmann", "12345678", it, olasKurs);
 		Student kari = new Student("Kari", "Nordmann", "12345678", it, olasKurs);
-		Item laptop = new Item("Dell XPS 13", 00000001);
-		Item mobil = new Item("iPhone 7", 00000002);		
+		Student anja = new Student("Anja", "Andersen", "12345678", it, olasKurs);
+		Student kjetil = new Student("Kjetil", "Fredriksen", "12345678", it, olasKurs);
+
+		Item laptop = new Item("Dell XPS 13", 1);
+		Item mobil = new Item("iPhone 7", 2);
+		
+		new Loan(ola, laptop, new GregorianCalendar());
+		new Loan(kari, mobil, new GregorianCalendar());
+		new Loan(anja, laptop, new GregorianCalendar());
+		new Loan(kjetil, mobil, new GregorianCalendar());
 		
 		// Start the GUI
 		MainFrame.main(null);
