@@ -68,19 +68,19 @@ public class Course {
 	/**
 	 * Runs toString method on all the items in the course list and returns them in an array
 	 */
-	public static Object[] toStrings() {
+	public static ArrayList<String> toStrings() {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (int i = 0; i < courses.size(); i++) {
 			strings.add(courses.get(i).toString());
 		}
 		
-		return strings.toArray();
+		return strings;
 	}
 	
 	/**
 	 * Runs toString method on all the items in the course list that belong to a department and returns them in an array
 	 */
-	public static Object[] toStrings(Department department) {
+	public static ArrayList<String> toStrings(Department department) {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (int i = 0; i < courses.size(); i++) {
 			Course course = courses.get(i);
@@ -90,6 +90,6 @@ public class Course {
 			}
 		}
 		
-		return strings.toArray();
+		return strings;
 	}
 }

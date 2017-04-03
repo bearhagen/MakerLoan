@@ -1,10 +1,11 @@
 package inventory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import hr.Person;
 
-public class Item {
+public class Item implements Serializable {
 	private String name;
 	private int itemID;
 	private static ArrayList<Item> items = new ArrayList<Item>();
@@ -60,12 +61,12 @@ public class Item {
 	/**
 	 *  Runs toString method on all the items in the item list and returns them in an array
 	 */
-	public static Object[] toStrings() {
+	public static ArrayList<String> toStrings() {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (int i = 0; i < items.size(); i++) {
 			strings.add(items.get(i).toString());
 		}
 		
-		return strings.toArray();
+		return strings;
 	}
 }

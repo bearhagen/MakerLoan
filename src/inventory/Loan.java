@@ -1,5 +1,6 @@
 package inventory;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import hr.Person;
 
-public class Loan {
+public class Loan implements Serializable {
 	private Item item;
 	private Person person;
 	private GregorianCalendar loanDate;

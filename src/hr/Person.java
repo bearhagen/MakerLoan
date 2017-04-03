@@ -1,10 +1,11 @@
 package hr;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import administration.Department;
 
-abstract public class Person {
+abstract public class Person implements Serializable {
 	private String name;
 	private String surName;
 	private String phone;
@@ -79,12 +80,12 @@ abstract public class Person {
 	/**
 	 *  Runs toString method on all the items in the people list and returns them in an array
 	 */
-	public static Object[] toStrings() {
+	public static ArrayList<String> toStrings() {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (int i = 0; i < people.size(); i++) {
 			strings.add(people.get(i).toString());
 		}
 		
-		return strings.toArray();
+		return strings;
 	}
 }

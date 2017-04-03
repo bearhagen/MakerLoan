@@ -826,7 +826,7 @@ public class MainFrame extends JFrame {
     					cardLayout.show(cards, "cardCourseSelect");
     					
     					// for course select card
-    					courseSelectList.setListData(Course.toStrings(selectedDepartment));    					
+    					courseSelectList.setListData(Course.toStrings(selectedDepartment).toArray());    					
     					
     					// Done with course selection
     					ccsBtnDone.addActionListener(new ActionListener() {
@@ -1094,13 +1094,13 @@ public class MainFrame extends JFrame {
 		}
 		
 		// Items card
-		itemList.setListData(Item.toStrings());
+		itemList.setListData(Item.toStrings().toArray());
 
 		// Departments card
-		departmentList.setListData(Department.toStrings());
+		departmentList.setListData(Department.toStrings().toArray());
 		
 		// Course card
-		courseList.setListData(Course.toStrings());
+		courseList.setListData(Course.toStrings().toArray());
 		ccCbDepartments.removeAllItems();
 		for (int i = 0; i < Department.getDepartments().size(); i++) {			
 			ccCbDepartments.addItem(Department.getDepartments().get(i));
@@ -1108,7 +1108,7 @@ public class MainFrame extends JFrame {
 	
 		// Person card
 		cpCbDepartments.setModel(ccCbDepartments.getModel());
-		personList.setListData(Person.toStrings());
+		personList.setListData(Person.toStrings().toArray());
 	}
 	
 	public void error(String errorMessage) {
