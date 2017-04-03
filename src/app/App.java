@@ -1,17 +1,25 @@
 package app;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import administration.Course;
 import administration.Department;
-import gui.*;
 import hr.Student;
 import inventory.Item;
 import inventory.Loan;
 
-public class App {
-	public static void main(String[] args) {
+public class App implements Serializable {
+	public static void main(String[] args) throws IOException {
 		Department larerStudie = new Department("Avdeling for lærerutdanning", "LA123");
 		new Course("Engelsk", "LAENG123", larerStudie);
 		
@@ -36,7 +44,73 @@ public class App {
 		new Loan(anja, laptop, new GregorianCalendar());
 		new Loan(kjetil, mobil, new GregorianCalendar());
 		
+		System.out.println(saveData());
+
+		ArrayList<Object> tempData = (ArrayList<Object>) loadData();
+
+		for (int i = 0; i < tempData.size(); i++) {
+			ArrayList<Object> objectData = (ArrayList<Object>) tempData.get(i);
+			System.out.println(tempData.get(i).getClass().getSimpleName() + ":");
+			
+			for (int j = 0; j < objectData.size(); j++) {
+				System.out.println("    " + objectData.get(j));
+			}
+		}
+		
 		// Start the GUI
-		MainFrame.main(null);
+//		MainFrame.main(null);
+	}
+	
+	public static boolean saveData() throws IOException {
+		// Write .ser file
+		ObjectOutputStream oos = null;
+		FileOutputStream fout = null;
+
+		try{
+		    fout = new FileOutputStream("C:\\Users\\bjorn\\Desktop\\oblig7\\test.ser", false);
+		    oos = new ObjectOutputStream(fout);
+
+		    List<Object> myObjects = new ArrayList<>();
+		    
+		    myObjects.add(Loan.toStrings());
+		    myObjects.add(Item.toStrings());
+		    myObjects.add(Student.toStrings());
+		    myObjects.add(Department.toStrings());
+		    myObjects.add(Course.toStrings());
+		    
+		    oos.writeObject(myObjects);
+		} catch (FileNotFoundException e) {
+		    System.out.println("File not found, make sure the path is correct.");
+		} catch (Exception e) {
+		    e.printStackTrace();
+		} finally {
+		    if(oos  != null){
+		        oos.close();
+		    } 
+		}
+		
+		return false;
+	}
+	
+	public static Object loadData() throws IOException {
+		// Read .ser file
+		ObjectInputStream objectinputstream = null;
+		FileInputStream streamIn = null;
+		
+		try {
+		    streamIn = new FileInputStream("C:\\Users\\bjorn\\Desktop\\oblig7\\test.ser");
+		    objectinputstream = new ObjectInputStream(streamIn);
+		    return objectinputstream.readObject();
+		} catch (FileNotFoundException e) {
+		    System.out.println("File not found, make sure the path is correct.");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+		    if(objectinputstream != null){
+		        objectinputstream.close();
+		    }
+		}
+		
+		return null;
 	}
 }
